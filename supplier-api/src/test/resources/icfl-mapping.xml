@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<stream name="icfl-stream" format="fixedlength">
+
+		<record name="icfl-header" class="ru.cetelem.cassiope.supplier.io.icfl.ICflHeader">
+			<field name="recordId" length="2" literal="AA" rid="true" />
+			<field name="batchDate" length="8" format="ddMMyyyy" />
+			<field name="sequnceNumber" length="5" padding="0" justify="right" />
+			<field name="createrSystem" length="7" literal="EUROVAC" />
+			<field name="filler" length="116" />
+			<field name="createrCompany" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-11-item" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl11Item">
+			<field name="recordId" length="2" literal="11" rid="true" />
+			<field name="dealerCode" length="5" />
+			<field name="invoiceNumber" length="7" padding="0" justify="right" />
+			<field name="paymentAmount" length="13" padding="0" justify="right" />
+			<field name="currency" length="3" literal="RUR" />
+			<field name="financeDate" length="8" format="ddMMyyyy" />
+			<field name="vin" length="17" />
+			<field name="processingDate" length="8" format="ddMMyyyy" />
+			<field name="filler" length="75" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-11-trail" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl11Trail">
+			<field name="recordId" length="2" literal="1Y" rid="true" />
+			<field name="totalAmount" length="17" padding="0" justify="right" />
+			<field name="numberOfRecords" length="5" padding="0" justify="right" />
+			<field name="filler" length="114" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-22-item" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl22Item">
+			<field name="recordId" length="2" literal="22" rid="true" />
+			<field name="dealerCode" length="5" />
+			<field name="invoiceNumber" length="7" padding="0" justify="right" />
+			<field name="invoiceAmount" length="13" padding="0" justify="right" />
+			<field name="currency" length="3" literal="RUR" />
+			<field name="financeDate" length="8" format="ddMMyyyy" />
+			<field name="whosaleDate" length="8" format="ddMMyyyy" />
+			<field name="vin" length="17" justify="left" />
+			<field name="model" length="4" />
+			<field name="orderNumber" length="5" justify="right" />
+			<field name="plateNumber" length="10" />
+			<field name="vatAmount" length="13" padding="0" justify="right" />
+			<field name="paymentAmount" length="13" padding="0" justify="right" />
+			<field name="planCode" length="2" />
+			<field name="businessType" length="2" />
+			<field name="filler" length="26" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-22-trail" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl22Trail">
+			<field name="recordId" length="2" literal="2Y" rid="true" />
+			<field name="totalAmount" length="17" padding="0" justify="right" />
+			<field name="numberOfRecords" length="5" padding="0" justify="right" />
+			<field name="filler" length="114" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-33-trail" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl33Trail">
+			<field name="recordId" length="2" literal="3Y" rid="true" />
+			<field name="totalAmount" length="17" padding="0" justify="right" />
+			<field name="numberOfRecords" length="5" padding="0" justify="right" />
+			<field name="filler" length="114" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-44-trail" class="ru.cetelem.cassiope.supplier.io.icfl.ICfl44Trail">
+			<field name="recordId" length="2" literal="4Y" rid="true" />
+			<field name="totalAmount" length="17" padding="0" justify="right" />
+			<field name="numberOfRecords" length="5" padding="0" justify="right" />
+			<field name="filler" length="114" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+		<record name="icfl-trail" class="ru.cetelem.cassiope.supplier.io.icfl.ICflTrail">
+			<field name="recordId" length="2" literal="ZZ" rid="true" />
+			<field name="totalAmount" length="5" padding="0" justify="right" />
+			<field name="filler" length="131" />
+			<field name="creator" length="2" />
+			<field name="filler2" length="116" />
+		</record>
+
+	</stream>
+</beanio>

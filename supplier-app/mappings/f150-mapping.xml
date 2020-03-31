@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="f150-stream" format="fixedlength">
+
+  	<record name="f150-header" class="ru.cetelem.cassiope.supplier.io.f150.F150Header">
+		<field name="entryType" length="2" literal="HD" rid="true" />
+		<field name="systemId" length="8" />	
+		<field name="location" length="2" literal="RU" />	
+		<field name="companyCode" length="1" literal="6" />	
+		
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="sequenceNumber" length="9" padding="0" justify="right" />	
+		<field name="purposeDescription" length="55" />	
+    </record>
+
+  	<record name="f150-trail" class="ru.cetelem.cassiope.supplier.io.f150.F150Trail">
+		<field name="entryType" length="2" literal="TR" rid="true" />
+		<field name="systemId" length="8" />	
+		<field name="location" length="2" literal="RU" />	
+		<field name="companyCode" length="1" literal="6" />	
+		
+		<field name="sequenceNumber" length="9" padding="0" justify="right" />	
+		<field name="nbEntries" length="9" padding="0" justify="right" />	
+    </record>
+    
+  	<record name="f150-item" class="ru.cetelem.cassiope.supplier.io.f150.F150Item">
+		<field name="entryType" length="2" literal="DT" rid="true"  />
+		<field name="location" length="2" literal="RU" />	
+		<field name="companyCode" length="1" literal="6" />	
+		<field name="dealerCode" length="5" literal="00000" />
+		
+		<field name="vin" length="17" />
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="localCodeDHL" length="4" literal="MOW1" />	
+		<field name="eptsNumber" length="15" />		
+    </record>
+    
+  </stream>
+</beanio>

@@ -1,0 +1,5 @@
+HD1s      RU620110525000003719PTS_DELIVERED_TO_DHLMOW                                               
+DTRU600000WF0DXXTTFDBL2767420110525MOW1                                                             
+DTRU600000WF0EXXGBBEBE1138620110525MOW1                                                             
+DTRU600000WF0GXXGAJGBE3968620110525MOW1                                                             
+TR1s      RU6000003719000000870                                                                     

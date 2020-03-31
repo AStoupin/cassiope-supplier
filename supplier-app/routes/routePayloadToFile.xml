@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://camel.apache.org/schema/spring" description="cfl, f120, f150 route">
+	<route customId="true" id="route-payload-to-file" description=" Extract payloads">
+		<from uri="timer://simpleTimer?period=10000" description=" check every 10 secs" />
+		<process ref="fileOutProcessor" />
+		<choice>
+			<when>
+				<log message="Start proccess file-out-payloads ${headers.CamelFileHost} +" />
+<!--				<simple>${headers.CamelFileHost} regex '.*(HAVALOO).*\.*'</simple> -->
+<simple>${headers.CamelFileHost} regex 'WA\.TZ\.MBOX\.RECV\.{{creator.mask}}OO\.N.*'</simple>
+				<to
+uri="dataformat:beanio:marshal?mapping=file:mappings/cfl-mapping.xml&amp;streamName=cfl-stream&amp;encoding=UTF-8" />
+				<to uri="file://{{outputFolder}}?fileName=${headers.CamelFileHost}" />
+				<log message="Finish proccess cfl-payloads: ${headers.CamelFileHost} " />
+			</when>
+			<when>
+				<log message="Start proccess file-out-payloads ${headers.CamelFileHost} +" />
+<!--				<simple>${headers.CamelFileHost} regex '.*(HAVALOK).*\.*'</simple> -->
+<simple>${headers.CamelFileHost} regex 'WA\.TZ\.MBOX\.RECV\.{{creator.mask}}OK\.N.*'</simple>
+				<to
+uri="dataformat:beanio:marshal?mapping=file:mappings/f120-mapping.xml&amp;streamName=f120-stream&amp;encoding=UTF-8" />
+				<to uri="file://{{outputFolder}}?fileName=${headers.CamelFileHost}" />
+				<log message="Finish proccess f120-payloads: ${headers.CamelFileHost} " />
+			</when>
+			<when>
+				<log message="Start proccess file-out-payloads ${headers.CamelFileHost} +" />
+<!--				<simple>${headers.CamelFileHost} regex '.*(HAVALOQ).*\.*'</simple> -->
+<simple>${headers.CamelFileHost} regex 'WA\.TZ\.MBOX\.RECV\.{{creator.mask}}OQ\.N.*'</simple>
+				<to
+uri="dataformat:beanio:marshal?mapping=file:mappings/f150-mapping.xml&amp;streamName=f150-stream&amp;encoding=UTF-8" />
+				<to uri="file://{{outputFolder}}?fileName=${headers.CamelFileHost}" />
+				<log message="Finish proccess f150-payloads: ${headers.CamelFileHost} " />
+			</when>
+			<otherwise>
+<!--				<log message="no data to extract +" /> -->
+				<stop />
+			</otherwise>
+		</choice>
+		<bean ref="fileOutProcessor" method="setProcessed" />
+	</route>
+</routes>

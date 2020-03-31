@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<stream name="f950-stream" format="fixedlength">
+
+		<record name="f950-header" class="ru.cetelem.cassiope.supplier.io.f950.F950Header">
+			<field name="entryType" length="2" literal="AA" rid="true" />
+			<field name="flowReference" length="4" />
+			<field name="date" length="12" format="yyyyMMddHHmm" />
+		</record>
+
+		<record name="f950-details" class="ru.cetelem.cassiope.supplier.io.f950.F950Item">
+			<field name="entryType" length="2" literal="DT" rid="true" />
+			<field name="dealerCode" length="5" />
+			<field name="invoiceID" length="8" />
+			<field name="invoiceAmount" length="15" padding="0" justify="right" />
+			<field name="vin" length="20" />
+		</record>
+
+		<record name="f950-trailer" class="ru.cetelem.cassiope.supplier.io.f950.F950Trailer">
+			<field name="entryType" length="2" literal="ZZ" rid="true" />
+			<field name="flowReference" length="4" />
+			<field name="date" length="12" format="yyyyMMddHHmm" />
+			<field name="nbEntries" length="15" padding="0" justify="right" />
+		</record>
+
+	</stream>
+
+</beanio>

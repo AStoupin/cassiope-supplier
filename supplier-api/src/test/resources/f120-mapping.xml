@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="f120-stream" format="fixedlength">
+
+  	<record name="f120-header" class="ru.cetelem.cassiope.supplier.io.f120.F120Header">
+		<field name="entryType" length="2" literal="AA" rid="true"  />
+		<field name="flowReference" length="4"   />	
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="hhmm"  />
+    </record>
+
+  	<record name="f120-trail" class="ru.cetelem.cassiope.supplier.io.f120.F120Trail">
+		<field name="entryType" length="2" literal="ZZ" rid="true"  />
+		<field name="flowReference" length="4"   />	
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="hhmm"  />
+		<field name="nbEntries" length="15"  padding="0" justify="right" />	
+		<field name="checkSumInvoiceAmount" length="17"  padding="0" justify="right" />	
+    </record>
+    
+
+    
+  	<record name="f120-item" class="ru.cetelem.cassiope.supplier.io.f120.F120Item">
+		<field name="entryType" length="2" literal="DT" rid="true"  />
+		<field name="dealerCode" length="5"  />
+		<field name="invoiceID" length="7"  padding="0" justify="right" />	
+		<field name="vatInvoiceId" length="8"  padding="0" justify="right" />	
+		<field name="grCcDate" length="8"  format="yyyyMMdd"/>
+		<field name="vin" length="17" />
+		<field name="invoiceAmount" length="15"  padding="0" justify="right" />			
+    </record>
+
+    
+  </stream>
+</beanio>

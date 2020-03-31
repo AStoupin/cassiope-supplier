@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="f920-stream" format="fixedlength">
+
+
+  	<record name="f920-header" class="ru.cetelem.cassiope.supplier.io.f920.F920Header">
+		<field name="recordId" length="2" literal="AA" rid="true"  />
+		<field name="company" length="1"   />	
+		<field name="generationDate" length="8"  format="yyyyMMdd"/>
+		<field name="fileNumber"  length="7"  padding="0" justify="right" />
+		<field name="origin" length="57"  />
+		<field name="generationTime" length="4"  padding="0" justify="right" />
+		<field name="filler" length="4"  />
+    </record>
+
+	
+  	<record name="f920-trail" class="ru.cetelem.cassiope.supplier.io.f920.F920Trail">
+		<field name="recordId" length="2" literal="YY" rid="true"  />
+		<field name="company" length="1"   />	
+		<field name="origin" length="65"  />
+		<field name="filler1" length="10"  />
+		<field name="numberOfRecords" length="10"  />
+		<field name="filler2" length="10"  />
+		<field name="totalAmount" length="18"  />
+
+    </record>
+
+    
+  	<record name="f920-item" class="ru.cetelem.cassiope.supplier.io.f920.F920Item">
+		<field name="recordId" length="2" literal="RU" rid="true"  />
+		<field name="company" length="1"   />	
+		<field name="businessType" length="2"   />
+		<field name="invoiceNumber" length="7"  padding="0" justify="right" />	
+		<field name="vin" length="17"   />
+		<field name="branch" length="2"   />
+		<field name="dealerCode" length="5"   />		
+		<field name="valueDate" length="8"  format="yyyyMMdd" />
+		<field name="accountingDate" length="8"  format="yyyyMMdd" />
+		<field name="amount" length="14"  padding="0" justify="right" />	
+		<field name="releaseDate" length="8" padding="0" justify="right"   />		
+		<field name="currency" length="3"  />		
+		<field name="status" length="2"  />		
+		<field name="paymentType" length="1"  />		
+		<field name="origin" length="10"  />		
+		<field name="intrestingVo" length="8" padding="0" justify="right"  />		
+		<field name="payDMonth" length="8" padding="0" justify="right"  />		
+		<field name="filler" length="14"/>		
+    </record>
+
+    
+  </stream>
+</beanio>

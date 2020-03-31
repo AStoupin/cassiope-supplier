@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="f940-stream" format="fixedlength">
+
+  	<record name="f940-header" class="ru.cetelem.cassiope.supplier.io.f940.F940Header">
+		<field name="entryType" length="2" literal="AA" rid="true"  />
+		<field name="flowReference" length="4" literal="F940" />	
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="HHmm"  />
+    </record>
+
+  	<record name="f940-trail" class="ru.cetelem.cassiope.supplier.io.f940.F940Trail">
+		<field name="entryType" length="2" literal="ZZ" rid="true"  />
+		<field name="flowReference" length="4" literal="F940" />		
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="HHmm"  />
+		
+		<!-- проверить! length="15" или 17 -->
+		<field name="nbEntries" length="15"  padding="0" justify="right" />	
+		<field name="checkSumHardLimits" length="17"  padding="0" justify="right" />	
+		<field name="checkSumSoftLimits" length="17"  padding="0" justify="right" />	
+		<field name="checkSumTotalFinanced" length="17"  padding="0" justify="right" />	
+		
+		<field name="checkSumAvailableAmount" length="17"  padding="0" justify="right" />			
+		<field name="checkSumSubLimits_DE_CC" length="17"  padding="0" justify="right" />	
+		<field name="checkSumTotalFinanced_DE_CC" length="17"  padding="0" justify="right" />	
+		<field name="checkSumAvailableAmount_DE_CC" length="17"  padding="0" justify="right" />	
+    </record>    
+    
+  	<record name="f940-item" class="ru.cetelem.cassiope.supplier.io.f940.F940Item">
+		<field name="entryType" length="2" literal="DT" rid="true"  />
+		<field name="dealerCode" length="5"  />
+		<field name="hardLimitATLAS" length="15"  padding="0" justify="right" />	
+		<field name="softLimitATLAS" length="15"  padding="0" justify="right" />	
+		
+		<field name="totalFinanced" length="15"  padding="0" justify="right" />			
+		<field name="amountAvailable" length="15"  padding="0" justify="right" />			
+		<field name="sublimit_DE_CC" length="15"  padding="0" justify="right" />	
+		<field name="totalFinanced_DE_CC" length="15"  padding="0" justify="right" />	
+		
+		<field name="amountAvailable_DE_CC" length="15"  padding="0" justify="right" />	
+    </record>
+    
+  </stream>
+</beanio>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+    <bean
+        class="org.apache.camel.processor.interceptor.DefaultTraceFormatter" id="traceFormatter">
+        <property name="showProperties" value="false"/>
+        <property name="showHeaders" value="false"/>
+        <property name="showExchangePattern" value="false"/>
+        <property name="showExchangeId" value="false"/>
+        <property name="showShortExchangeId" value="true"/>
+        <property name="showRouteId" value="true"/>
+        <property name="showBreadCrumb" value="false"/>
+    </bean>
+
+</beans>

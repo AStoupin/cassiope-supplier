@@ -1,0 +1,17 @@
+# Maven
+/target/
+
+# Eclipse
+/bin/
+/.settings/
+/.classpath
+/.project
+
+# Idea
+/*.iml
+
+/output/
+
+/*.log
+
+/input/

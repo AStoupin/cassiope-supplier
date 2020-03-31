@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes description="File ICFL to DB" xmlns="http://camel.apache.org/schema/spring">
+
+	<route customId="true"
+		description=" Proccess a *.csv file and split it line by line" id="route-file-to-icflPayload">
+		<from description=" check every 10 secs"
+uri="file://{{inputFolder}}?include=.*{{mask.ICFL}}.*&amp;move={{doneFolder}}&amp;moveFailed={{errorFolder}}" />
+		<log
+			message="Start proccess ${headers.CamelFileHost} /  ${header.CamelFileAbsolutePath}" />
+		<to
+			uri="dataformat:beanio:unmarshal?mapping=file:mappings/icfl-mapping.xml&amp;streamName=icfl-stream&amp;encoding=UTF-8" />
+		<process ref="fileInProcessor" />
+		<log message="Finish proccess OK - ${header.CamelFileAbsolutePath}" />
+	</route>
+
+</routes>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="f910-stream" format="fixedlength">
+
+  	<record name="f910-header" class="ru.cetelem.cassiope.supplier.io.f910.F910Header">
+		<field name="entryType" length="2" literal="AA" rid="true"  />
+		<field name="flowReference" length="4" literal="F910" />	
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="HHmm"  />
+    </record>
+
+  	<record name="f910-trail" class="ru.cetelem.cassiope.supplier.io.f910.F910Trail">
+		<field name="entryType" length="2" literal="ZZ" rid="true"  />
+		<field name="flowReference" length="4" literal="F910" />		
+		<field name="date" length="8"  format="yyyyMMdd"/>
+		<field name="time" length="4" format="HHmm"  />
+		<field name="nbEntries" length="15"  padding="0" justify="right" />	
+		<field name="checkSumInvoiceAmount" length="17"  padding="0" justify="right" />	
+    </record>
+    
+    
+  	<record name="f910-item" class="ru.cetelem.cassiope.supplier.io.f910.F910Item">
+		<field name="entryType" length="2" literal="DA" rid="true"  />
+		<field name="dealerCode" length="5"  />
+		<field name="carFinModel" length="2" literal="  " />
+		<field name="invoiceID" length="8"  padding="0" justify="right" />	
+		<field name="vatInvoiceId" length="8"  padding="0" justify="right" />	
+		<field name="vin" length="17" />
+		<field name="invoiceAmount" length="15"  padding="0" justify="right" />			
+		<field name="financingDate" length="8"  format="yyyyMMdd"/>
+    </record>
+
+    
+  </stream>
+</beanio>
