@@ -182,7 +182,7 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		listPayloadItemsLayout.setSizeFull();
 		setSizeFull();
 		
-		showCompanyName(carService.getEnvironment());
+		
 		
 		log.info("CarEditorView finished ");
 	}

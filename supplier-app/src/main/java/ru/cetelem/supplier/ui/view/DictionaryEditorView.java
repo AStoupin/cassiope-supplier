@@ -79,7 +79,6 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 		grid.setSizeFull(); 
 		setSizeFull();
 
-		showCompanyName(dictionaryService.getEnvironment());
 	}
 	
 

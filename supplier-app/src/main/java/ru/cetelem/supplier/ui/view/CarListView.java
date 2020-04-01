@@ -122,7 +122,7 @@ public class CarListView extends BaseView implements RouterLayout {
 		crudGrid.setWidthFull();
 		setHeightFull();
 		
-		showCompanyName(carService.getEnvironment());
+		
 	}
 
 	private Button createUploadButton() {

@@ -77,7 +77,7 @@ public class PayloadListView extends BaseView implements RouterLayout {
 		crudGrid.setWidthFull();
 		setHeightFull();		
 
-		showCompanyName(payloadService.getEnvironment());
+
 
 	}
 

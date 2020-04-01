@@ -171,7 +171,7 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 		listPayloadItemsLayout.setSizeFull();
 		setSizeFull();
 
-		showCompanyName(carService.getEnvironment());
+
 		
 		log.info("DealerEditorView init finished ");
 	}

@@ -217,7 +217,6 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 		 * itemList.setHeightFull(); itemList.setWidthFull();
 		 */
 
-		showCompanyName(payloadService.getEnvironment());
 	}
 
 	private StreamResource getPayloadResource() {
