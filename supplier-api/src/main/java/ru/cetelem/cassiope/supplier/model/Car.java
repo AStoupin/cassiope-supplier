@@ -44,10 +44,10 @@ public class Car {
 	@ManyToOne(targetEntity = FinancePlan.class, optional = true, fetch = FetchType.EAGER)
 	private FinancePlan financePlan;
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "car", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<RepaymentItem> repaymentItems  = new ArrayList<>();
-	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "car", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<PayloadItem> payloadItems  = new ArrayList<>();
 	
