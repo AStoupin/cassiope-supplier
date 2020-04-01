@@ -12,11 +12,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -34,6 +37,7 @@ import ru.cetelem.supplier.repository.PayloadRepository;
 import ru.cetelem.supplier.util.Configurator;
 
 @Service
+@Transactional
 public class PayloadService {
 	private static final Log log = LogFactory.getLog(PayloadService.class); 
 	
@@ -59,48 +63,10 @@ public class PayloadService {
 
 		this.payloadItemProcessorFactory = new PayloadItemProcessorFactory(carService, this);
 
-//		generateData();
 
 		log.info("PayloadService create finished ");
 	}
-/*	
-	private void generateData() {
-		log.info("generateData started");
 
-//		payloadRepository.save(new Payload(CFL, "cfl_20190101_0000", LocalDate.now()));
-		payloadRepository.save(new Payload(F120, "FileName2.txt", LocalDate.now()));
-		payloadRepository.save(new Payload(PayloadType.F910, "F910_20190808.txt", LocalDate.now()));
-		payloadRepository.save(new Payload(PayloadType.F950, "F950_20190812.txt", LocalDate.now()));
-		payloadRepository.save(new Payload(PayloadType.F920, "F920_20190812.txt", LocalDate.now()));
-		payloadRepository.save(new Payload(PayloadType.F940, "F940_20190813.txt", LocalDate.now()));
-/*
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("cfl_20190101_0000").get(),
-		    carService.findCarByVin("0").get(), "22"));
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("cfl_20190101_0000").get(),
-		    carService.findCarByVin("1").get(), "22"));
-* /
-		payloadItemRepository.save(new PayloadItem(
-			payloadRepository.findByName("F910_20190808.txt").get(),
-		    carService.findCarByVin("5").get(), "910"));
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("F910_20190808.txt").get(),
-		    carService.findCarByVin("6").get(), "910"));
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("F950_20190812.txt").get(),
-		    carService.findCarByVin("8").get(), "950"));
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("F920_20190812.txt").get(),
-		    carService.findCarByVin("9").get(), "920"));
-
-		payloadItemRepository.save(new PayloadItem(
-		    payloadRepository.findByName("F940_20190813.txt").get(),
-		    carService.getDealerService().findByCode("UR238").get().getLimit(), "940"));
-
-		log.info("generateData finished");
-	}
-*/
 	public List<Payload> getPayloads(){
 		log.info("getPayloads started");
 		
@@ -117,6 +83,7 @@ public class PayloadService {
 		return payloadRepository.findByName(name);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Payload savePayload(Payload payload) {
 		log.info("savePayload started"); 
 		
@@ -125,16 +92,7 @@ public class PayloadService {
  		payloadRepository.save(payload);
 		
 		if(!"FAILED".contains(payload.state)) {
-			/*
-			for (PayloadItem item : payload.getPayloadItems()) {
-				log.info("getPayloadItems [payload=" + item.payload 
-						+ ", car=" + item.car 
-						+ ", eventCode=" + item.eventCode
-						+ ", source=" + item.source
-						+ ", sourceType=" + item.sourceType
-						+ ", id=" + item.id + "]");
-			}
-			 */
+
 			payload.getPayloadItems().stream().filter(pi->pi.getCar()!=null).map(pi->pi.getCar())
 				.forEach(carService::saveCar);
 
