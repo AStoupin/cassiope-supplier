@@ -170,6 +170,7 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 
 		listPayloadItemsLayout.setSizeFull();
 		setSizeFull();
+		setPadding(true);
 
 
 		

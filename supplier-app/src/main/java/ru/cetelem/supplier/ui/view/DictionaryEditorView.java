@@ -47,6 +47,7 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 			DealerService dealerService) {
 		this.dictionaryService = dictionaryService;
 		this.dealerService = dealerService;
+
 	}
 
 

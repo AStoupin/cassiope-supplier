@@ -212,6 +212,8 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 
 		listLayout.setSizeFull();
 		setSizeFull();
+		setPadding(true);
+
 		/*
 		 * listLayout.setHeightFull(); listLayout.setWidthFull();
 		 * itemList.setHeightFull(); itemList.setWidthFull();

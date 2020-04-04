@@ -15,6 +15,8 @@ import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -23,11 +25,12 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 import ru.cetelem.supplier.util.Configurator;
 
 @Theme(value=Material.class/*, variant=Material.DARK*/)
-//@Theme(value=Lumo.class/*, variant=Lumo.DARK*/) 
+//@Theme(value=Lumo.class, variant=Lumo.DARK) 
 @PWA(name = "X-Factor Supplier Starter Kit", shortName = "X-Factor Supplier")
 @HtmlImport("frontend://styles/app-layout-custom.html")
 @HtmlImport("frontend://styles/shared-styles.html")
@@ -37,22 +40,25 @@ public class MainLayout extends AppLayout   {
 	private Environment environment = null;
 	private Tabs tabs;
 	private Tab databaseMenuItem;
+	private HorizontalLayout leftLayout;
+	private HorizontalLayout rightLayout;
 	
 	@Autowired
 	MainLayout(Environment environment) {
 		this.environment = environment;
 		init();
 
-		showDatabaseTab(environment);
-		showCompanyName(environment);
 	}
 	
 
 	
 	private void init() {
 		setPrimarySection(AppLayout.Section.NAVBAR);
-		HorizontalLayout leftLayout = new HorizontalLayout();
+		leftLayout = new HorizontalLayout();
 		leftLayout.setClassName("leftLayout");
+		rightLayout = new HorizontalLayout();
+		rightLayout.setClassName("rightLayout");
+
 		
 		Image img = new Image("/icons/logo.png", "X-Factor Logo");
 		img.setHeight("44px");
@@ -61,28 +67,33 @@ public class MainLayout extends AppLayout   {
 		leftLayout.add(img);
 
 		
-		this.tabs.add(new Tab(new RouterLink("Car Models", DictionaryEditorView.class, new String("model"))));
-		this.tabs.add(new Tab(new RouterLink("Dealers", DictionaryEditorView.class, new String("dealers"))));
-		this.tabs.add(new Tab(new RouterLink("Finance Plans", DictionaryEditorView.class,  new String("plan"))));
+		this.tabs.add(new Tab(new RouterLink("Car Models", DictionaryEditorView.class, "model")));
+		this.tabs.add(new Tab(new RouterLink("Dealers", DictionaryEditorView.class, "dealers")));
+		this.tabs.add(new Tab(new RouterLink("Finance Plans", DictionaryEditorView.class,  "plan")));
 		this.tabs.add(new Tab(new RouterLink("Cars", CarListView.class)));
 		this.tabs.add(new Tab(new RouterLink("Payloads", PayloadListView.class)));
 		
-
+		final int CARS_TAB_INDEX = 3; 
+		this.tabs.setSelectedIndex(CARS_TAB_INDEX);
 
 		tabs.setOrientation(Orientation.HORIZONTAL);
-
-		addToNavbar(leftLayout,  tabs);
+		
+		addToNavbar(leftLayout,  tabs, rightLayout);
 		
 
 
 		setDrawerOpened(false);
+
+		showDatabaseTab();
+		showCompanyName();
+		showVersion();
 
 		
 	}
 
 
 
-	private void showDatabaseTab(Environment environment) {
+	private void showDatabaseTab() {
 		boolean databaseMenuItemVisibale = 
 				environment == null || !"0".equals(environment.getProperty(Configurator.SHOW_DATABASE));
 		log.info(String.format("init %s", databaseMenuItemVisibale));
@@ -102,19 +113,17 @@ public class MainLayout extends AppLayout   {
 
 
 	
-	public void showCompanyName(Environment environment) {	
+	public void showCompanyName() {	
 		log.info("showCompanyName started");	
-		Html creatorName = new Html("<span><b>" + environment.getProperty(Configurator.CREATOR_NAME) 
-			+ "</b>" + getVersion(environment) + "</span>");
-		log.debug("creatorName " + creatorName.getInnerHtml().toString());
-		creatorName.getElement().getStyle().set("position","absolute");
-		//creatorName.getElement().getStyle().set("top", "-3px");
-		creatorName.getElement().getStyle().set("right", 15 + "px");		
+		Label creatorName = new Label(environment.getProperty(Configurator.CREATOR_NAME));
+		creatorName.setClassName("companyName");
 		
-		addToNavbar(creatorName);
+		rightLayout.add(creatorName);
+		log.debug("creatorName " + environment.getProperty(Configurator.CREATOR_NAME));
 	}
 
-	public String getVersion(Environment environment) {	
+	public String showVersion() {	
+
 		log.info("getVersion started");	
 		String version = "";	
 		try {
@@ -122,7 +131,9 @@ public class MainLayout extends AppLayout   {
 			if(version == null) {
 				version = "";
 			} else {
-				version = "<font size=\"-1\" color=\"grey\">, v " + version + "</font>";
+				Label versionName = new Label("v " + version);
+				versionName.setClassName("version");
+				rightLayout.add(versionName);
 			}	
 		} catch (Exception e) {
 			log.error("Exception " + e);

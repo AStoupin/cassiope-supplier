@@ -16,7 +16,9 @@ public class BaseView extends VerticalLayout {
 	private static final Log log = LogFactory.getLog(BaseView.class); 
 	
 	public BaseView() {
-		setSizeFull();		
+		setSizeFull();
+		setPadding(false);
+
     }
 
 }
