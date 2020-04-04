@@ -1,6 +1,7 @@
 package ru.cetelem.supplier.ui.component;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -8,8 +9,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.provider.SortDirection;
 
 import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
@@ -41,7 +44,14 @@ public class PayloadItemListBrief extends VerticalLayout  {
 
 		
 		crudGrid.setColumns("payload.payloadType", "payload.state", "payload.processedDate", "eventCode");
+
+		// setting default sort column
+		GridSortOrder<PayloadItem> order = new GridSortOrder<>(crudGrid.getColumnByKey("payload.processedDate"), 
+				SortDirection.DESCENDING);
+		 
+		crudGrid.sort(Arrays.asList(order));
 		
+	
 		add(crudGrid);
 
 		crudGrid.setSizeFull();
