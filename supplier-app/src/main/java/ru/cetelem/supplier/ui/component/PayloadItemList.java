@@ -72,7 +72,6 @@ public class PayloadItemList extends VerticalLayout  {
 		crudGrid.getAddButton().addClickListener(this::addPayloadItems);
 		crudGrid.setAddOperationVisible(!isReadOnly);
 		
-		// TODO need recalculate trailer after delete rows (F120 error 2019-09-24)
 		crudGrid.setDeleteOperation(this::removePayloadItem);
 		crudGrid.setDeleteOperationVisible(!isReadOnly && payloadItemProcessor instanceof AbstractCarPayloadItemUpdateProcessor);
 		

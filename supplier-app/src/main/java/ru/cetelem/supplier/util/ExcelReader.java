@@ -44,7 +44,7 @@ public class ExcelReader {
 		HSSFWorkbook myExcelBook = new HSSFWorkbook(stream);
 		HSSFSheet myExcelSheet = myExcelBook.getSheetAt(0);
 		for (int numRow = 0; ; numRow++) {
-			if(myExcelSheet.getRow(numRow)==null || 
+			if(myExcelSheet.getRow(numRow)==null || myExcelSheet.getRow(numRow).getCell(0)==null || 
 					"".equals(myExcelSheet.getRow(numRow).getCell(0).getStringCellValue()))
 				break;
 
