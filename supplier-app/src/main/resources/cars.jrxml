@@ -14,7 +14,7 @@
 	<title>
 		<band height="70">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="1024" height="70" backcolor="#006699" uuid="9cfb4189-6018-403a-96af-427b3ac52af5">
+				<reportElement mode="Opaque" x="0" y="0" width="1024" height="70" forecolor="#E0E0E0" backcolor="#00A344" uuid="9cfb4189-6018-403a-96af-427b3ac52af5">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -30,7 +30,7 @@
 				<staticText>
 					<reportElement x="929" y="43" width="95" height="20" forecolor="#FFFFFF" uuid="db0b82b8-2a26-4871-858e-19d7f17025ef"/>
 					<textElement textAlignment="Center">
-						<font size="14" isBold="false"/>
+						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Cars report]]></text>
 				</staticText>
@@ -44,14 +44,11 @@
 		<band height="21">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="194" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="2a7f29f9-d451-4942-a3fc-8f506b4794cb">
+				<reportElement mode="Opaque" x="0" y="0" width="194" height="20" isRemoveLineWhenBlank="true" forecolor="#00A344" backcolor="#E6E6E6" uuid="2a7f29f9-d451-4942-a3fc-8f506b4794cb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2801776-363d-4973-a26a-5ca6e7c69669"/>
 				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -59,14 +56,11 @@
 				<text><![CDATA[Vin]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="194" y="0" width="173" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="358c14a9-7c57-4c27-b46c-4cfb8ff2c633">
+				<reportElement mode="Opaque" x="194" y="0" width="173" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="358c14a9-7c57-4c27-b46c-4cfb8ff2c633">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69ffd28c-c118-405e-9b31-234235837187"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -74,14 +68,11 @@
 				<text><![CDATA[State]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="367" y="0" width="100" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6cf88fe3-8533-4532-b6d5-d87a1edba170">
+				<reportElement mode="Opaque" x="367" y="0" width="100" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="6cf88fe3-8533-4532-b6d5-d87a1edba170">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60201540-64c3-4447-860c-69ce8cba9f78"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -89,14 +80,11 @@
 				<text><![CDATA[Issue Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="467" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="18c71e23-f645-4969-a127-b47cb224f436">
+				<reportElement mode="Opaque" x="467" y="0" width="79" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="18c71e23-f645-4969-a127-b47cb224f436">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0aa4ef13-95a1-4b78-bd5f-684e888df5ac"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -104,14 +92,11 @@
 				<text><![CDATA[Invoice Num]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="546" y="0" width="84" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="665d8b9b-5556-4128-8ebe-080d0c7b1625">
+				<reportElement mode="Opaque" x="546" y="0" width="84" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="665d8b9b-5556-4128-8ebe-080d0c7b1625">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="324de02a-f7f3-4d2d-acfd-cdcd64b4ac23"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -119,14 +104,11 @@
 				<text><![CDATA[Value]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="630" y="0" width="299" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7f570513-a587-44d2-9d7f-ef84b751bd62">
+				<reportElement mode="Opaque" x="630" y="0" width="299" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="7f570513-a587-44d2-9d7f-ef84b751bd62">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="177cbdaf-274a-479a-bd2c-522544d28826"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -134,14 +116,11 @@
 				<text><![CDATA[Dealer]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="929" y="0" width="95" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="efaf6f1d-2248-4e82-a2e3-ce4835e23286">
+				<reportElement mode="Opaque" x="929" y="0" width="95" height="20" forecolor="#00A344" backcolor="#E6E6E6" uuid="efaf6f1d-2248-4e82-a2e3-ce4835e23286">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25b2ea0b-e610-47c6-91cb-df00213e886d"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
@@ -154,7 +133,7 @@
 		<band height="20">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="1024" height="1" uuid="6353582b-bd80-4a0e-8153-45e7fb7493ca">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="1024" height="1" forecolor="#00A344" uuid="6353582b-bd80-4a0e-8153-45e7fb7493ca">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</line>
@@ -163,10 +142,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2801776-363d-4973-a26a-5ca6e7c69669"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement>
 					<font fontName="Arial" size="14"/>
@@ -178,10 +154,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69ffd28c-c118-405e-9b31-234235837187"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement>
 					<font fontName="Arial" size="14"/>
@@ -193,10 +166,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60201540-64c3-4447-860c-69ce8cba9f78"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="14"/>
@@ -208,10 +178,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0aa4ef13-95a1-4b78-bd5f-684e888df5ac"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="14"/>
@@ -223,10 +190,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="324de02a-f7f3-4d2d-acfd-cdcd64b4ac23"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="14"/>
@@ -238,10 +202,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="177cbdaf-274a-479a-bd2c-522544d28826"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement>
 					<font fontName="Arial" size="14"/>
@@ -253,10 +214,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25b2ea0b-e610-47c6-91cb-df00213e886d"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.5" lineColor="#00A344"/>
 				</box>
 				<textElement>
 					<font fontName="Arial" size="14"/>
