@@ -6,6 +6,8 @@ public class XFGridCrud<T> extends GridCrud<T>{
 
 	public XFGridCrud(Class domainType) {
 		super(domainType);
+
+		//padding spacing
 	}
 	
 

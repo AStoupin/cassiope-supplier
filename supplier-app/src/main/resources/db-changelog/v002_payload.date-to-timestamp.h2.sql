@@ -1,0 +1,5 @@
+--liquibase formatted sql
+
+--changeset Art:1586032267021-26
+ALTER TABLE PUBLIC.PAYLOAD
+ MODIFY COLUMN date TIMESTAMP

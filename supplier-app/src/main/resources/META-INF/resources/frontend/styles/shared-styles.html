@@ -7,24 +7,27 @@
       --material-primary-color: hsl(145, 100%, 32%);
       --material-primary-contrast-color: #fff;
       --light-primary-color:  hsl(145, 100%, 32%);
-	  --material-primary-text-color: hsl(145, 100%, 32%);
+	  --material-primary-text-color: hsl(145, 100%, 32%) !important;
 	  --dark-theme-base-color:  hsl(145, 100%, 32%);
 
 
-      --lumo-primary-color: hsl(145, 100%, 32%);
-	  --lumo-primary-text-color: hsl(145, 100%, 32%);
+      --lumo-primary-color: hsl(145, 100%, 32%) !important;
+	  --lumo-primary-text-color: hsl(145, 100%, 32%) !important;
 	  --dark-theme-base-color:  hsl(145, 100%, 32%);
+	  --lumo-primary-color-10pct: hsla(144, 90%, 52%, 0.1) !important;
+	  
 	}  
     html  [theme~="dark"] {
       --material-primary-color:  hsl(145, 100%, 32%);
       --light-primary-color: hsl(145, 100%, 32%);
-	  --material-primary-text-color: hsl(145, 100%, 32%);
+	  --material-primary-text-color: hsl(145, 100%, 32%) !important;
 	  --dark-theme-base-color:  hsl(145, 100%, 32%);
+	  --lumo-primary-color-10pct: hsla(144, 90%, 52%, 0.1) !important;
 
 
-      --lumo-primary-color: hsl(145, 100%, 32%);
-	  --lumo-primary-text-color: hsl(145, 100%, 32%);
-	  --dark-theme-base-color:  hsl(145, 100%, 32%);
+      --lumo-primary-color: hsl(145, 100%, 32%) !important;
+	  --lumo-primary-text-color: hsl(145, 100%, 32%) !important;
+	  --dark-theme-base-color:  hsl(145, 100%, 32%) !important;
 	}
 	.splitter {
 	      background-color: var(--material-primary-color);
@@ -36,5 +39,22 @@
 		position: absolute;
 		left: 0;
 	}	
+	
+	.rightLayout { 
+		position: absolute;
+		right:10px;
+	}
+	
+	.companyName{
+		font-weight: 500;
+		padding-top: 0px;
+	}
+	
+	.version{
+		color: grey;
+		font-size: calc(var(--material-body-font-size) - 3px);
+		padding-top: 3px;
+
+	}
   </style>
 </custom-style>        
