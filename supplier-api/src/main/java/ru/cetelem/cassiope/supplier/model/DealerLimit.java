@@ -15,7 +15,7 @@ public class DealerLimit {
     @GeneratedValue
     @Column(name = "Id", nullable = false)
     private int id;
-	@OneToMany(mappedBy = "limit", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "limit", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.JOIN)
 	private List<PayloadItem> payloadItems = new ArrayList<PayloadItem>();
 	@ManyToOne(targetEntity = Dealer.class, optional = false, fetch = FetchType.EAGER)
