@@ -18,16 +18,12 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.QuerySortOrder;
@@ -52,10 +48,9 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 	TextField vinFilter;
 	TextField stateFilter;
 	TextField dealerFilter;
-	TextField carModelFilter;
 	Checkbox archivedFilter;
-	DatePicker issueDateFieldFrom;
-	DatePicker issueDateFieldTo;	
+	DatePicker dateFrom;
+	DatePicker dateTo;	
 
 	private Button btnArchive;
 
@@ -93,6 +88,11 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 				.setComparator((d1, d2) -> DateUtils.compare(d1.getIssueDate(), d2.getIssueDate()))
 				.setHeader("Issue Date").setKey("issueDate").setResizable(true)
 				.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("issueDate", d)).stream());
+		
+		grid.addColumn(car -> DateUtils.asString(car.getFullRepaymentDate()))
+			.setComparator((d1, d2) -> DateUtils.compare(d1.getFullRepaymentDate(), d2.getFullRepaymentDate()))
+			.setHeader("Full Repayment Date").setKey("fullRepaymentDate").setResizable(true)
+			.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("fullRepaymentDate", d)).stream());
 
 		crudGrid.getGrid().addColumns("invoiceNum");
 
@@ -127,13 +127,13 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 	private Button createArchiveButton() {
 		return new Button("", clickEvent -> {
 			log.info("clickArchiveButton started");
-			LocalDate today = LocalDate.now();
-			int count = 0;
 			Grid<Car> grid = crudGrid.getGrid();
+			
+			int count = 0;
 			Set<Car> cars = new HashSet<>(grid.getSelectedItems());
-			grid.setSelectionMode(SelectionMode.SINGLE);
-			count = carService.archiveCars(today, count, cars);		
-			grid.setSelectionMode(SelectionMode.MULTI);	
+			LocalDate today = LocalDate.now();
+			count = carService.archiveCars(cars, today);		
+			
 			crudGrid.refreshGrid();
 			if(count == 0) {
 				Notification.show("There are no cars for archiving");
@@ -163,27 +163,22 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		dealerFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(dealerFilter);
 
-		carModelFilter = new TextField("Filter by Car Model");
-		carModelFilter.setWidth("165px");
-		carModelFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(carModelFilter);
-
 		archivedFilter = new Checkbox();
 		archivedFilter.getElement().setProperty("title", "Show archived cars");
 		archivedFilter.setLabel("Arch");
-		archivedFilter.getElement().setAttribute("style", "margin-left: 0px; padding-top: 16px");
+		archivedFilter.getElement().setAttribute("style", "margin-left: 0px; padding-top: 16px; color: grey");
 		archivedFilter.setValue(false);
 		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 
-		issueDateFieldFrom = new DatePicker("Date from");
-		issueDateFieldFrom.setWidth("115px");
-		issueDateFieldFrom.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(issueDateFieldFrom);
+		dateFrom = new DatePicker("From repayment");
+		dateFrom.setWidth("155px");
+		dateFrom.addValueChangeListener(e -> crudGrid.refreshGrid());
+		crudGrid.getCrudLayout().addFilterComponent(dateFrom);
 		
-		issueDateFieldTo = new DatePicker("Date to");
-		issueDateFieldTo.setWidth("115px");
-		issueDateFieldTo.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(issueDateFieldTo);
+		dateTo = new DatePicker("To repayment");
+		dateTo.setWidth("155px");
+		dateTo.addValueChangeListener(e -> crudGrid.refreshGrid());
+		crudGrid.getCrudLayout().addFilterComponent(dateTo);
 		
 		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
 
@@ -197,26 +192,32 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 							|| StringUtils.containsIgnoreCase(car.getState(), "REPAID")
 							|| StringUtils.containsIgnoreCase(car.getState(), "ARCHIVED")
 							)
-					&& isBetweenDates(car.getIssueDate(), 
-							issueDateFieldFrom.getValue(), issueDateFieldTo.getValue())
+					&& isBetweenDates(car.getFullRepaymentDate(), 
+							dateFrom.getValue(), dateTo.getValue())
 					&& StringUtils.containsIgnoreCase(car.getState(), stateFilter.getValue())
 					&& StringUtils.containsIgnoreCase(car.getDealer() == null 
 						? "" : car.getDealer().toString(),dealerFilter.getValue())
-					&& StringUtils.containsIgnoreCase(car.getCarModel().toString(), carModelFilter.getValue())
 					&& (archivedFilter.getValue() || !"ARCHIVED".equals(car.getState()));
 
 		}).collect(Collectors.toList());
 	}
 
-	private boolean isBetweenDates(LocalDate issueDate, LocalDate dateFrom, LocalDate dateTo) {
+	private boolean isBetweenDates(LocalDate date, LocalDate dateFrom, LocalDate dateTo) {
 		int compareFrom = 0;
 		int compareTo = 0;
-		if(issueDate != null) {
+		if(date == null) {
 			if(dateFrom != null) {
-				compareFrom = dateFrom.compareTo(issueDate);
+				compareFrom = 1;
 			}
 			if(dateTo != null) {
-				compareTo = dateTo.compareTo(issueDate);
+				compareTo = -1;
+			}
+		} else {
+			if(dateFrom != null) {
+				compareFrom = dateFrom.compareTo(date);
+			}
+			if(dateTo != null) {
+				compareTo = dateTo.compareTo(date);
 			}
 		}
 		return compareFrom <= 0 && compareTo >= 0;

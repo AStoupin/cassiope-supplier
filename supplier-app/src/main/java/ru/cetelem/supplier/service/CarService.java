@@ -63,6 +63,7 @@ public class CarService {
 		return carRepository.findByVin(vin);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Car saveCar(Car car) {
 		log.info(String.format("CarService saveCar started for vin:  %s", car.getVin()));
 		
@@ -183,10 +184,11 @@ public class CarService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public int archiveCars(LocalDate today, int count, Set<Car> cars) {
+	public int archiveCars(Set<Car> cars, LocalDate archiveDate) {
+		int count = 0;
 		for(Car car : cars) {
 			if(car.getArchivedDate() == null) {
-				car.setArchivedDate(today);
+				car.setArchivedDate(archiveDate);
 				saveCar(car);
 				count++;
 			}
