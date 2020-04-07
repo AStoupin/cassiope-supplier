@@ -8,6 +8,7 @@ import static ru.cetelem.cassiope.supplier.io.PayloadType.F920;
 import static ru.cetelem.cassiope.supplier.io.PayloadType.F950;
 import static ru.cetelem.cassiope.supplier.io.PayloadType.ICFL;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.apache.commons.logging.Log;
@@ -232,6 +233,7 @@ public class CarStateProcessor {
 			if (CAR_STATE_FINANCED.equals(carNew.getState())
 					&& carNew.getDealer() != null
 					&& fullRepayedPayloadItem.isPresent()) {
+				carNew.setFullRepaymentDate(LocalDate.now());
 				carNew.setState(CAR_STATE_REPAID);
 			}
 
