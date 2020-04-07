@@ -92,6 +92,9 @@ public class CarListView extends BaseView implements RouterLayout {
 
 		HorizontalLayout horizontalLayout = (HorizontalLayout) crudGrid
 				.getAddButton().getParent().get();
+		horizontalLayout.setSpacing(false);
+		horizontalLayout.setMargin(false);
+		horizontalLayout.getElement().setAttribute("style", "margin-left: 0px;");
 		horizontalLayout.add(btnUpload, download);
 
 		crudGrid.getGrid().setColumns("vin", "state");
@@ -207,7 +210,8 @@ public class CarListView extends BaseView implements RouterLayout {
 		
 		archivedFilter = new Checkbox();
 		archivedFilter.getElement().setProperty("title", "Show archived cars");
-		archivedFilter.setLabel(" ");
+		archivedFilter.setLabel("Archived");
+		archivedFilter.getElement().setAttribute("style", "margin-left: 0px; padding-top: 16px");
 		archivedFilter.setValue(false);
 		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
