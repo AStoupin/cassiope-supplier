@@ -72,6 +72,7 @@ public class MainLayout extends AppLayout   {
 		this.tabs.add(new Tab(new RouterLink("Finance Plans", DictionaryEditorView.class,  "plan")));
 		this.tabs.add(new Tab(new RouterLink("Cars", CarListView.class)));
 		this.tabs.add(new Tab(new RouterLink("Payloads", PayloadListView.class)));
+		this.tabs.add(new Tab(new RouterLink("Archive", CarArchiveListView.class)));
 		
 		final int CARS_TAB_INDEX = 3; 
 		this.tabs.setSelectedIndex(CARS_TAB_INDEX);

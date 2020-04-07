@@ -1,3 +1,7 @@
+-- update_car script
+-- 2020-04-07
+-- ver. 1.0
+
 select state, count(*) from car group by state ;
 
 ALTER TABLE PAYLOAD ALTER COLUMN DATE TIMESTAMP ;
@@ -20,7 +24,7 @@ where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'CFL' and pi.CAR_ID is not null a
 'READY TO FINANCE',
 'FINANCE REQUESTED',
 'FINANCED',
-'REPAID', 'ARCHIVED'
+'REPAID', 'CANCEL', 'ARCHIVED'
 ) and DEALER_ID is not null ;
 
 -- update F150 without CFL-11
@@ -38,7 +42,7 @@ where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'F150' and pi.CAR_ID is not null 
 'READY TO FINANCE',
 'FINANCE REQUESTED',
 'FINANCED',
-'REPAID', 'ARCHIVED', 'NEW'
+'REPAID', 'CANCEL', 'ARCHIVED', 'NEW'
 ) and DEALER_ID is not null ;
 
 -- update F950 without CFL-11
@@ -55,7 +59,7 @@ where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'F950' and pi.CAR_ID is not null 
 'READY TO FINANCE',
 'FINANCE REQUESTED',
 'FINANCED',
-'REPAID', 'ARCHIVED', 'NEW'
+'REPAID', 'CANCEL', 'ARCHIVED', 'NEW'
 ) and DEALER_ID is not null ;
 
 -- update F120 without CFL-11
@@ -71,7 +75,7 @@ where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'F120' and pi.CAR_ID is not null 
 ) and state not in (
 'FINANCE REQUESTED',
 'FINANCED',
-'REPAID', 'ARCHIVED', 'NEW'
+'REPAID', 'CANCEL', 'ARCHIVED', 'NEW'
 ) and DEALER_ID is not null ;
 
 -- update F910 without CFL-11
@@ -86,7 +90,7 @@ join PAYLOAD p on p.id = pi.PAYLOAD_id
 where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'F910' and pi.CAR_ID is not null and SOURCE_TYPE = 'ru.cetelem.cassiope.supplier.io.f910.F910Item' and EVENT_CODE in('910')
 ) and state not in (
 'FINANCED',
-'REPAID', 'ARCHIVED', 'NEW'
+'REPAID', 'CANCEL', 'ARCHIVED', 'NEW'
 ) and DEALER_ID is not null ;
 
 -- update F920 without CFL-11
@@ -100,7 +104,7 @@ SELECT pi.CAR_ID FROM PAYLOAD_ITEM pi
 join PAYLOAD p on p.id = pi.PAYLOAD_id
 where state  = 'PROCESSED'  and PAYLOAD_TYPE = 'F920' and pi.CAR_ID is not null and SOURCE_TYPE = 'ru.cetelem.cassiope.supplier.io.f910.F910Item' and EVENT_CODE in('920')
 ) and state not in (
-'REPAID', 'ARCHIVED', 'NEW'
+'REPAID', 'CANCEL', 'ARCHIVED', 'NEW'
 ) and DEALER_ID is not null ;
 
 commit;
