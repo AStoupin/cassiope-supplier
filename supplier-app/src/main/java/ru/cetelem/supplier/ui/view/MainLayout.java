@@ -104,6 +104,7 @@ public class MainLayout extends AppLayout   {
 		Anchor anchor = new Anchor();
 		anchor.setText("Database");
 		anchor.setHref("db/login.jsp");
+		anchor.setTarget("_blank");
 		this.databaseMenuItem = new Tab(anchor); 
 		
 		this.tabs.add(databaseMenuItem);
