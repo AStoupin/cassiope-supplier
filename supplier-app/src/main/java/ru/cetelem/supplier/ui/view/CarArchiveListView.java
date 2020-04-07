@@ -166,7 +166,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		archivedFilter = new Checkbox();
 		archivedFilter.getElement().setProperty("title", "Show archived cars");
 		archivedFilter.setLabel("Arch");
-		archivedFilter.getElement().setAttribute("style", "margin-left: 0px; padding-top: 16px; color: grey");
+		archivedFilter.setClassName("archCheckFilter");
 		archivedFilter.setValue(false);
 		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 
@@ -203,6 +203,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 	}
 
 	private boolean isBetweenDates(LocalDate date, LocalDate dateFrom, LocalDate dateTo) {
+		
 		int compareFrom = 0;
 		int compareTo = 0;
 		if(date == null) {
