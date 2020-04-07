@@ -12,6 +12,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
@@ -21,6 +23,7 @@ import ru.cetelem.cassiope.supplier.model.RepaymentItem;
 import ru.cetelem.supplier.repository.CarRepository;
 
 @Service
+@Transactional
 public class CarService {
 	private static final Log log = LogFactory.getLog(CarService.class); 
 
@@ -59,6 +62,7 @@ public class CarService {
 		return carRepository.findByVin(vin);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Car saveCar(Car car) {
 		log.info(String.format("CarService saveCar started for vin:  %s", car.getVin()));
 		
