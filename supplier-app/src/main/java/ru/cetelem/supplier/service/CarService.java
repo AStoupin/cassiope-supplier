@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -12,6 +13,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
@@ -21,6 +24,7 @@ import ru.cetelem.cassiope.supplier.model.RepaymentItem;
 import ru.cetelem.supplier.repository.CarRepository;
 
 @Service
+@Transactional
 public class CarService {
 	private static final Log log = LogFactory.getLog(CarService.class); 
 
@@ -177,6 +181,19 @@ public class CarService {
 		}
 		return carModel;
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public int archiveCars(LocalDate today, int count, Set<Car> cars) {
+		for(Car car : cars) {
+			if(car.getArchivedDate() == null) {
+				car.setArchivedDate(today);
+				saveCar(car);
+				count++;
+			}
+		}
+		return count;
+	}
+
 
 	public Environment getEnvironment() {
 		return environment;

@@ -132,13 +132,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 			Grid<Car> grid = crudGrid.getGrid();
 			Set<Car> cars = new HashSet<>(grid.getSelectedItems());
 			grid.setSelectionMode(SelectionMode.SINGLE);
-			for(Car car : cars) {
-				if(car.getArchivedDate() == null) {
-					car.setArchivedDate(today);
-					carService.saveCar(car);
-					count++;
-				}
-			}		
+			count = carService.archiveCars(today, count, cars);		
 			grid.setSelectionMode(SelectionMode.MULTI);	
 			crudGrid.refreshGrid();
 			if(count == 0) {
@@ -149,6 +143,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 			return;
 		});
 	}
+
 
 	private void initFilter(Grid<Car> grid) {
 
