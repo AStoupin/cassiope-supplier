@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -181,6 +182,20 @@ public class CarService {
 		}
 		return carModel;
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public int archiveCars(Set<Car> cars, LocalDate archiveDate) {
+		int count = 0;
+		for(Car car : cars) {
+			if(car.getArchivedDate() == null) {
+				car.setArchivedDate(archiveDate);
+				saveCar(car);
+				count++;
+			}
+		}
+		return count;
+	}
+
 
 	public Environment getEnvironment() {
 		return environment;

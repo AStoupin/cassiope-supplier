@@ -128,10 +128,12 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		return new Button("", clickEvent -> {
 			log.info("clickArchiveButton started");
 			Grid<Car> grid = crudGrid.getGrid();
+			
+			int count = 0;
 			Set<Car> cars = new HashSet<>(grid.getSelectedItems());
-			grid.setSelectionMode(SelectionMode.SINGLE);
-			int count = archiveCars(cars);
-			grid.setSelectionMode(SelectionMode.MULTI);	
+			LocalDate today = LocalDate.now();
+			count = carService.archiveCars(cars, today);		
+			
 			crudGrid.refreshGrid();
 			if(count == 0) {
 				Notification.show("There are no cars for archiving");
@@ -142,18 +144,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		});
 	}
 
-	private int archiveCars(Set<Car> cars) {
-		int count = 0;
-		LocalDate today = LocalDate.now();
-		for(Car car : cars) {
-			if(car.getArchivedDate() == null) {
-				car.setArchivedDate(today);
-				carService.saveCar(car);
-				count++;
-			}
-		}		
-		return count;
-	}
 
 	private void initFilter(Grid<Car> grid) {
 
