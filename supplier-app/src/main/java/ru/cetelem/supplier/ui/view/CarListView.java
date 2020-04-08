@@ -211,7 +211,7 @@ public class CarListView extends BaseView implements RouterLayout {
 		archivedFilter = new Checkbox();
 		archivedFilter.getElement().setProperty("title", "Show archived cars");
 		archivedFilter.setLabel("Arch");
-		archivedFilter.getElement().setAttribute("style", "margin-left: 0px; padding-top: 16px; color: grey");
+		archivedFilter.setClassName("archCheckFilterCars");
 		archivedFilter.setValue(false);
 		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);

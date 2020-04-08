@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset Art:1586032267021-27
 -- set FULL_REPAYMENT_DATE
 update car car 
 set FULL_REPAYMENT_DATE = (SELECT max(date) FROM REPAYMENT_ITEM where car_id = car.id )
