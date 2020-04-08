@@ -153,12 +153,12 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 	        .setKey("Available Amount")
 			.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("Available Amount", d)).stream());
 
-		currentGrid.getGrid().getColumnByKey("code").setResizable(true);
-		currentGrid.getGrid().getColumnByKey("name").setResizable(true);
-		currentGrid.getGrid().getColumnByKey("Hard Limit").setResizable(true);
-		currentGrid.getGrid().getColumnByKey("Soft Limit").setResizable(true);
-		currentGrid.getGrid().getColumnByKey("Total Financed").setResizable(true);
-		currentGrid.getGrid().getColumnByKey("Available Amount").setResizable(true);
+		currentGrid.getGrid().getColumnByKey("code").setResizable(true).setFlexGrow(1);
+		currentGrid.getGrid().getColumnByKey("name").setResizable(true).setFlexGrow(5);
+		currentGrid.getGrid().getColumnByKey("Hard Limit").setResizable(true).setFlexGrow(1);
+		currentGrid.getGrid().getColumnByKey("Soft Limit").setResizable(true).setFlexGrow(1);
+		currentGrid.getGrid().getColumnByKey("Total Financed").setResizable(true).setFlexGrow(1);
+		currentGrid.getGrid().getColumnByKey("Available Amount").setResizable(true).setFlexGrow(1);
 /*	    
 	    currentGrid.getGrid()	       
 	    	.addColumn(new NumberRenderer<> (d->{return d.getLimit().getSublimitDeCc();}, numberFormat, ""))

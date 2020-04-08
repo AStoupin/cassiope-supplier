@@ -86,12 +86,12 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 
 		grid.addColumn(car -> DateUtils.asString(car.getIssueDate()))
 				.setComparator((d1, d2) -> DateUtils.compare(d1.getIssueDate(), d2.getIssueDate()))
-				.setHeader("Issue Date").setKey("issueDate").setResizable(true)
+				.setHeader("Issue Date").setKey("issueDate").setResizable(true).setFlexGrow(1)
 				.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("issueDate", d)).stream());
 		
 		grid.addColumn(car -> DateUtils.asString(car.getFullRepaymentDate()))
 			.setComparator((d1, d2) -> DateUtils.compare(d1.getFullRepaymentDate(), d2.getFullRepaymentDate()))
-			.setHeader("Full Repayment Date").setKey("fullRepaymentDate").setResizable(true)
+			.setHeader("Full Repayment Date").setKey("fullRepaymentDate").setResizable(true).setFlexGrow(1)
 			.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("fullRepaymentDate", d)).stream());
 
 		crudGrid.getGrid().addColumns("invoiceNum");
@@ -102,16 +102,16 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 
 		grid.addColumn(car -> numberFormat.format(car.getValue())).setHeader("Value")
 				.setComparator((v1, v2) -> (int) ((v1.getValue() - v2.getValue()) * 100))
-				.setTextAlign(ColumnTextAlign.END).setResizable(true).setKey("value")
+				.setTextAlign(ColumnTextAlign.END).setResizable(true).setKey("value").setFlexGrow(1)
 				.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("value", d)).stream());
 
 		crudGrid.getGrid().addColumns("dealer", "carModel");
 
-		grid.getColumnByKey("vin").setResizable(true);
-		grid.getColumnByKey("state").setResizable(true);
-		grid.getColumnByKey("invoiceNum").setResizable(true);
-		grid.getColumnByKey("dealer").setResizable(true);
-		grid.getColumnByKey("carModel").setResizable(true);
+		grid.getColumnByKey("vin").setResizable(true).setFlexGrow(3);
+		grid.getColumnByKey("state").setResizable(true).setFlexGrow(1);
+		grid.getColumnByKey("invoiceNum").setResizable(true).setFlexGrow(1);
+		grid.getColumnByKey("dealer").setResizable(true).setFlexGrow(5);
+		grid.getColumnByKey("carModel").setResizable(true).setFlexGrow(1);
 
 		grid.getColumnByKey("dealer").setSortable(true);
 		grid.getColumnByKey("carModel").setSortable(true);
@@ -138,7 +138,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 			if(count == 0) {
 				Notification.show("There are no cars for archiving");
 			} else {
-				Notification.show("Archived " + count + " car(s).");
+				Notification.show("Archived " + count + " car(s)");
 			}
 			return;
 		});

@@ -103,6 +103,7 @@ public class CarListView extends BaseView implements RouterLayout {
 			.setComparator((d1, d2) -> DateUtils.compare(d1.getIssueDate(), d2.getIssueDate()))
 			.setHeader("Issue Date")
 			.setKey("issueDate")
+			.setFlexGrow(1)
 			.setResizable(true)
 			.setSortOrderProvider(d->Arrays.asList(new QuerySortOrder("issueDate", d)).stream());
 
@@ -115,20 +116,21 @@ public class CarListView extends BaseView implements RouterLayout {
 		grid.addColumn(car -> numberFormat.format(car.getValue())).setHeader("Value")
 				.setComparator((v1, v2) -> (int) ((v1.getValue() - v2.getValue()) * 100))
 				.setTextAlign(ColumnTextAlign.END)
+				.setFlexGrow(1)
 				.setResizable(true)
 				.setKey("value")
 				.setSortOrderProvider(d -> Arrays.asList(new QuerySortOrder("value", d)).stream());
 
 		crudGrid.getGrid().addColumns("dealer", "carModel");
 
-		grid.getColumnByKey("vin").setResizable(true);
-		grid.getColumnByKey("state").setResizable(true);
-		grid.getColumnByKey("invoiceNum").setResizable(true);
-		grid.getColumnByKey("dealer").setResizable(true);
-		grid.getColumnByKey("carModel").setResizable(true);
+		grid.getColumnByKey("vin").setResizable(true).setFlexGrow(2);
+		grid.getColumnByKey("state").setResizable(true).setFlexGrow(1);
+		grid.getColumnByKey("invoiceNum").setResizable(true).setFlexGrow(1);
+		grid.getColumnByKey("dealer").setResizable(true).setFlexGrow(1);
+		grid.getColumnByKey("carModel").setResizable(true).setFlexGrow(1);
 
-		grid.getColumnByKey("dealer").setSortable(true);
-		grid.getColumnByKey("carModel").setSortable(true);
+		grid.getColumnByKey("dealer").setSortable(true).setFlexGrow(4);
+		grid.getColumnByKey("carModel").setSortable(true).setFlexGrow(1);
 		
 		initFilter(grid);
 

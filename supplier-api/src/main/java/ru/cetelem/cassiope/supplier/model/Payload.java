@@ -40,6 +40,7 @@ public class Payload {
 	public String state;
 
 	public int sequenceNumber;
+	private LocalDate archivedDate;
 	
 	public Payload() {
 		this.state = "NEW";
@@ -164,6 +165,16 @@ public class Payload {
 
 	public void setDateOnly(LocalDate date) {
 		this.date = DateUtils.asLocalDateTime(date);
+	}
+
+
+	public LocalDate getArchivedDate() {
+		return archivedDate;
+	}
+
+
+	public void setArchivedDate(LocalDate archivedDate) {
+		this.archivedDate = archivedDate;
 	}
 
 }

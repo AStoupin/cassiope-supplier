@@ -1,17 +1,16 @@
 package ru.cetelem.supplier.service;
 
-import static ru.cetelem.cassiope.supplier.io.PayloadType.*;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +29,7 @@ import ru.cetelem.cassiope.supplier.io.cfl.Cfl11Item;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl22Item;
 import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
+import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.integration.AbstractPayloadItemProcessor;
 import ru.cetelem.supplier.integration.PayloadItemProcessorFactory;
 import ru.cetelem.supplier.repository.PayloadItemRepository;
@@ -243,6 +243,22 @@ public class PayloadService {
 	
 	public Environment getEnvironment() {
 		return environment;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public int archivePayloads(Set<Payload> payloads, LocalDate archiveDate, int days) {
+		int count = 0;
+		for(Payload payload : payloads) {
+			long daysBetween = ChronoUnit.DAYS.between(
+					payload.getDate(), 
+					DateUtils.asLocalDateTime(archiveDate));
+			if(payload.getArchivedDate() == null && daysBetween >= days) {
+				payload.setArchivedDate(archiveDate);
+				payloadRepository.save(payload);
+				count++;
+			}
+		}
+		return count;
 	}
 	
 }
