@@ -1,25 +1,22 @@
 package ru.cetelem.supplier.ui.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
+import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
@@ -27,18 +24,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
-import ru.cetelem.cassiope.supplier.model.Car;
-import ru.cetelem.cassiope.supplier.model.CarModel;
 import ru.cetelem.cassiope.supplier.model.Dealer;
-import ru.cetelem.cassiope.supplier.model.DealerLimit;
-import ru.cetelem.cassiope.supplier.model.FinancePlan;
+import ru.cetelem.cassiope.supplier.model.PayloadItem;
 import ru.cetelem.supplier.service.CarService;
 import ru.cetelem.supplier.service.DealerService;
 import ru.cetelem.supplier.service.DictionaryService;
 import ru.cetelem.supplier.service.PayloadService;
 import ru.cetelem.supplier.ui.component.PayloadItemListBrief;
-import ru.cetelem.supplier.ui.component.PayloadItemList;
-import ru.cetelem.supplier.ui.component.RepaymentItemList;
 
 @PageTitle("Dealer editor")
 @Route(value = "dealer", layout = MainLayout.class)
@@ -89,8 +81,6 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 		TextField codeField = new TextField("code");
 		TextField nameField = new TextField("name");
 
-	    
- 		
 		
 		TextField hardLimitField = new TextField("Hard Limit");
 		TextField softLimitField = new TextField("Soft Limit");
@@ -127,8 +117,6 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 		
 		binder.readBean(dealer);
 		
-
-
 		
 		HorizontalLayout actionsLayout = new HorizontalLayout();
 		
@@ -158,11 +146,9 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 		
 		add(actionsLayout);
 	
-
-
 		
 		VerticalLayout listPayloadItemsLayout = new VerticalLayout();
-		PayloadItemListBrief carPayloadItemList = new PayloadItemListBrief(dealer.getLimit().getPayloadItems());
+		PayloadItemListBrief carPayloadItemList = new PayloadItemListBrief(getPayloadItemsFiltered());
 		carPayloadItemList.setHeight("300px");
 
 		listPayloadItemsLayout.add(carPayloadItemList);
@@ -172,9 +158,18 @@ public class DealerEditorView extends BaseView implements RouterLayout, HasUrlPa
 		setSizeFull();
 		setPadding(true);
 
-
 		
 		log.info("DealerEditorView init finished ");
 	}
-	
+
+	private List<PayloadItem> getPayloadItemsFiltered() {
+		List<PayloadItem> payloadItemsFiltered = new ArrayList<PayloadItem>();
+		for (PayloadItem payloadItem : dealer.getLimit().getPayloadItems()) {
+			if(payloadItem.getPayload().getArchivedDate() == null) {
+				payloadItemsFiltered.add(payloadItem);
+			}
+		}
+		return payloadItemsFiltered;
+	}
+
 }

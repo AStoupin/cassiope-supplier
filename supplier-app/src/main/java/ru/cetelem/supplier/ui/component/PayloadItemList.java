@@ -76,7 +76,8 @@ public class PayloadItemList extends VerticalLayout  {
 		crudGrid.setDeleteOperationVisible(!isReadOnly && payloadItemProcessor instanceof AbstractCarPayloadItemUpdateProcessor);
 		
 		crudGrid.getGrid().setColumns("source", "errorDescr");
-		crudGrid.getGrid().getColumns().get(0).setResizable(true);
+		crudGrid.getGrid().getColumns().get(0).setResizable(true).setFlexGrow(5);
+		crudGrid.getGrid().getColumns().get(1).setFlexGrow(1);
 		//crudGrid.getGrid().getColumns().get(1).setResizable(true);
 		//crudGrid.getGrid().getColumns().get(1).setWidth("100px");
 		
