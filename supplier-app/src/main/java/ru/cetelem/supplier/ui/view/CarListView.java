@@ -75,6 +75,11 @@ public class CarListView extends BaseView implements RouterLayout {
 		crudGrid.getUpdateButton().addClickListener(this::editSelectedCar);
 		crudGrid.setDeleteOperationVisible(false);
 		crudGrid.setFindAllOperation(this::getFilterdCars);
+		
+		grid.addItemDoubleClickListener(event -> {
+			grid.select(event.getItem());
+			editSelectedCar(null);
+		});
 
 		btnUpload = createUploadButton();
 		btnUpload.setIcon(new Icon(VaadinIcon.UPLOAD_ALT));

@@ -83,6 +83,11 @@ public class PayloadService {
 		return payloadRepository.findByName(name);
 	}
 	
+	public Optional<Payload> getPayloadByNameOne(String name) {
+		log.info("getPayloadByNameOne started"); 
+		return payloadRepository.findByNameOne(name);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Payload savePayload(Payload payload) {
 		log.info("savePayload started"); 

@@ -86,7 +86,7 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 
 	private void init(String payloadName) {
 		Optional<Payload> initPayload = payloadService
-				.getPayloadByName(payloadName);
+				.getPayloadByNameOne(payloadName);
 		if (!initPayload.isPresent()) {
 			if (payloadName != null) {
 				Notification.show(String.format(
@@ -169,6 +169,7 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 		download.getElement().setAttribute("download", true);
 		download.getElement().setAttribute("title", "Download file");
 		download.add(new Button(new Icon(VaadinIcon.DOWNLOAD_ALT)));
+		download.getElement().setAttribute("style", "text-decoration: none");
 		download.setVisible(getPayload().name != null
 				&& getPayload().name.length() > 0);
 

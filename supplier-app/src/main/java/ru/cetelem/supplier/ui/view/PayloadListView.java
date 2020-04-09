@@ -70,6 +70,11 @@ public class PayloadListView extends BaseView implements RouterLayout {
 		crudGrid.getUpdateButton().addClickListener(this::editSelected);
 		crudGrid.setFindAllOperation(this::getFilterd);
 		crudGrid.setDeleteOperationVisible(false);
+		
+		grid.addItemDoubleClickListener(event -> {
+			grid.select(event.getItem());
+			editSelected(null);
+		});
 
 		btnArchive = createArchiveButton();
 		btnArchive.setIcon(new Icon(VaadinIcon.ARCHIVE));
