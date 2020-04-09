@@ -90,8 +90,8 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		NumberField valueFinanceField = new NumberField("Value Finance");
 		valueFinanceField.setVisible(false);		
 		DatePicker  issueDateField = new DatePicker("Issue Date");
-		ComboBox<CarModel>  carNodelField = new ComboBox("Car Model");
-		carNodelField.setItems(dictionaryService.getModels());
+		ComboBox<CarModel>  carModelField = new ComboBox("Car Model");
+		carModelField.setItems(dictionaryService.getModels());
 		ComboBox<Dealer>  dealerField = new ComboBox("Dealer");
 		dealerField.setItems(dealerService.getDealers());
 		TextField invoiceNumField = new TextField("Invoice Num"); 
@@ -110,7 +110,7 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		binder.forField(valueField).bind(Car::getValue, Car::setValue);
 		binder.forField(issueDateField).bind(Car::getIssueDate, Car::setIssueDate);
 		binder.forField(valueFinanceField).bind(Car::getValueFinance, Car::setValueFinance);
-		binder.forField(carNodelField).bind(Car::getCarModel, Car::setCarModel);
+		binder.forField(carModelField).bind(Car::getCarModel, Car::setCarModel);
 		binder.forField(dealerField).bind(Car::getDealer, Car::setDealer);
 		binder.forField(invoiceNumField).bind(Car::getInvoiceNum, Car::setInvoiceNum);
 		binder.forField(eptsNumberField).bind(Car::getEptsNumber, Car::setEptsNumber);
@@ -118,7 +118,7 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		binder.forField(archivedDateField).bind(Car::getArchivedDate, Car::setArchivedDate);
 		
 		fields.add(vinField, stateField, valueField, valueFinanceField, archivedDateField, 
-				issueDateField, carNodelField, dealerField, financePlanField,
+				issueDateField, carModelField, dealerField, financePlanField,
 				invoiceNumField, eptsNumberField);
 		add(fields);
 		binder.readBean(car);

@@ -66,6 +66,14 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		crudGrid.setUpdateOperationVisible(false);
 		crudGrid.setDeleteOperationVisible(false);
 		crudGrid.setFindAllOperation(this::getFilterdCars);
+		
+		grid.addItemClickListener(event -> {
+			if(grid.getSelectedItems().contains(event.getItem())) {
+				grid.deselect(event.getItem());
+			} else {
+				grid.select(event.getItem());
+			}
+		});
 
 		btnArchive = createArchiveButton();
 		btnArchive.setIcon(new Icon(VaadinIcon.ARCHIVE));

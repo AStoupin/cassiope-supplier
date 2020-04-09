@@ -2,20 +2,20 @@ package ru.cetelem.supplier.ui.component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridSortOrder;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.RouterLink;
 
+import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
-import ru.cetelem.supplier.ui.view.DictionaryEditorView;
 import ru.cetelem.supplier.ui.view.PayloadEditorView;
 
 public class PayloadItemListBrief extends VerticalLayout  {
@@ -32,9 +32,17 @@ public class PayloadItemListBrief extends VerticalLayout  {
 		add(caption);
 
 		crudGrid = new Grid<PayloadItem>(PayloadItem.class);
-
 		
 		crudGrid.setItems(payloadItems);
+
+		crudGrid.addItemDoubleClickListener(event -> {
+			crudGrid.select(event.getItem());
+			Optional<PayloadItem> selectedPayloadItem = crudGrid.getSelectedItems().stream().findFirst();
+			if(selectedPayloadItem.isPresent()) {
+				getUI().ifPresent(ui -> 
+					ui.navigate("payload/" + selectedPayloadItem.get().getPayload().getName()));	
+			}
+		});
 		
 		
 		crudGrid.setColumns("payload.payloadType", "payload.state", "payload.processedDate", "eventCode");

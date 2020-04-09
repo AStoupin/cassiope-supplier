@@ -17,7 +17,10 @@ public interface PayloadRepository  extends CrudRepository<Payload, Integer> {
 
 	@Query("select p from Payload p order by p.date desc")
 	public Iterable<Payload> findAll();
-	
+
+	@Query("select p from Payload p where p.id = (select max(r.id) from Payload r where r.name = :name)")
+	public Optional<Payload> findByNameOne(@Param("name") String name);
+
 	@Query("select p from Payload p where p.name = :name")
 	public Optional<Payload> findByName(@Param("name") String name);
 

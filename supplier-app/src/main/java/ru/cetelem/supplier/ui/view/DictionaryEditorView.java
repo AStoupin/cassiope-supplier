@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.vaadin.flow.component.grid.ColumnTextAlign;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.QuerySortOrder;
 import com.vaadin.flow.data.renderer.NumberRenderer;
 import com.vaadin.flow.router.BeforeEvent;
@@ -19,6 +20,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
+import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
 import ru.cetelem.cassiope.supplier.model.Dealer;
 import ru.cetelem.cassiope.supplier.model.FinancePlan;
@@ -94,6 +96,12 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 		currentGrid.setDeleteOperation(dictionaryService::carModelDelete);
 		currentGrid.setUpdateOperation(dictionaryService::carModelUpdate);
 		currentGrid.setFindAllOperation(dictionaryService::getModels);
+
+		Grid<CarModel> grid = currentGrid.getGrid();
+		grid.addItemDoubleClickListener(event -> {
+			grid.select(event.getItem());
+			currentGrid.getUpdateButton().click();
+		});
 	
 		return currentGrid;
 	}
@@ -106,6 +114,12 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 			Optional<Dealer> selectedDealer = currentGrid.getGrid().getSelectedItems().stream().findFirst();
 			if(selectedDealer.isPresent())
 				getUI().ifPresent(ui -> ui.navigate("dealer/" + selectedDealer.get().getCode()));				
+		});
+
+		Grid<Dealer> grid = currentGrid.getGrid();
+		grid.addItemDoubleClickListener(event -> {
+			grid.select(event.getItem());
+			currentGrid.getUpdateButton().click();
 		});
 		
 		currentGrid.getAddButton().addClickListener(e->{
@@ -188,6 +202,12 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 		currentGrid.setDeleteOperation(dictionaryService.financePlanRepository::delete);
 		currentGrid.setUpdateOperation(dictionaryService.financePlanRepository::save);
 		currentGrid.setFindAllOperation(dictionaryService::getFinancePlanes);
+
+		Grid<FinancePlan> grid = currentGrid.getGrid();
+		grid.addItemDoubleClickListener(event -> {
+			grid.select(event.getItem());
+			currentGrid.getUpdateButton().click();
+		});
 	
 		return currentGrid;
 	}
