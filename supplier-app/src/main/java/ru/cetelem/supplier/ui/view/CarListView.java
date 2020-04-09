@@ -3,10 +3,13 @@ package ru.cetelem.supplier.ui.view;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,15 +22,19 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Input;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
@@ -38,6 +45,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
 import ru.cetelem.cassiope.supplier.model.Car;
+import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.service.CarService;
 import ru.cetelem.supplier.service.DictionaryService;
@@ -57,10 +65,11 @@ public class CarListView extends BaseView implements RouterLayout {
 	TextField stateFilter;
 	TextField dealerFilter;
 	TextField carModelFilter;
-	Checkbox archivedFilter;
 
 	private Button btnUpload;
 	private Anchor download;
+	private Button btnArchive;
+	private Input input;
 
 	public CarListView(@Autowired CarService carService,
 			@Autowired DictionaryService dictionaryService) {
@@ -95,12 +104,17 @@ public class CarListView extends BaseView implements RouterLayout {
 		Button btnDownload = (Button) download.getChildren().findFirst().get();
 		btnDownload.setHeight("100%");
 
+		btnArchive = createArchiveButton();
+		btnArchive.setIcon(new Icon(VaadinIcon.ARCHIVE));
+		btnArchive.setId("btnArchive");
+		btnArchive.getElement().setAttribute("title", "Archive old fully repaid cars");
+
 		HorizontalLayout horizontalLayout = (HorizontalLayout) crudGrid
 				.getAddButton().getParent().get();
 		horizontalLayout.setSpacing(false);
 		horizontalLayout.setMargin(false);
 		horizontalLayout.getElement().setAttribute("style", "margin-left: 0px;");
-		horizontalLayout.add(btnUpload, download);
+		horizontalLayout.add(btnUpload, download, btnArchive);
 
 		crudGrid.getGrid().setColumns("vin", "state");
 
@@ -143,6 +157,72 @@ public class CarListView extends BaseView implements RouterLayout {
 		crudGrid.setWidthFull();
 		setHeightFull();
 		
+	}
+	private Button createArchiveButton() {
+		return new Button("", clickEvent -> {
+			log.info("clickArchiveButton started");
+			Div header = new Div();
+			header.getElement().setAttribute("style", "text-align: center; font-size: xx-large; padding-bottom: 30px;");
+			Span headerLabel = new Span("Archive fully repaid cars");
+			header.add(headerLabel);
+
+			Dialog dialog = new Dialog(header);
+			dialog.setWidth("400px");
+			dialog.addDialogCloseActionListener(e -> dialog.close());
+
+			Label leftLabel = new Label("Archive fully repaid cars older then ");			
+			input = new Input();
+			input.setValue("10");
+			input.setWidth("40px");
+			Label rightLabel = new Label(" day(s)");
+			dialog.add(leftLabel, input, rightLabel);
+
+			Div divider = new Div();
+			divider.setHeight("20px");
+			dialog.add(divider);
+			
+			Div footer = new Div();
+			footer.getElement().setAttribute("style", "float: right; padding-bottom: 20px;");			
+			
+			Button archiveButton = createArchiveButtonDialog(dialog);			
+			archiveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+			Button cancelButton = new Button("Cancel", event -> dialog.close());
+			archiveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+			
+			footer.add(archiveButton, cancelButton);			
+			dialog.add(footer);
+						
+			dialog.open();
+			input.getElement().callJsFunction("focus");
+			return;
+		});
+	}
+
+	private Button createArchiveButtonDialog(Dialog dialog) {
+		return new Button("Archive", event -> {
+			log.info("clickArchiveButtonDialog started");
+			int days = 0;
+			try {
+				days = Integer.parseInt(input.getValue());
+			} catch (NumberFormatException e) {
+				log.error("createArchiveButtonDialog", e);
+				Notification.show("Must be number: '" + input.getValue() + "'");
+			}
+			int count = 0;
+			if(days > 0) {
+				Set<Car> cars = new HashSet<>(getFilterdCars());
+				LocalDate today = LocalDate.now();
+				count = carService.archiveCars(cars, today, days);
+				
+				crudGrid.refreshGrid();
+			}
+			if(count == 0) {
+				Notification.show("There are no cars for archiving");
+			} else {
+				Notification.show("Archived " + count + " cars");
+			}
+		    dialog.close();
+		});
 	}
 
 	private Button createUploadButton() {
@@ -201,28 +281,23 @@ public class CarListView extends BaseView implements RouterLayout {
 		vinFilter = new TextField("Filter by VIN");
 		vinFilter.setId("vinFilter");
 		vinFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
+		vinFilter.getElement().setAttribute("style", "width: 170px;");		
 		crudGrid.getCrudLayout().addFilterComponent(vinFilter);
 
 		stateFilter = new TextField("Filter by State");
 		stateFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
+		vinFilter.getElement().setAttribute("style", "width: 170px;");		
 		crudGrid.getCrudLayout().addFilterComponent(stateFilter);
 
 		dealerFilter = new TextField("Filter by Dealer");
 		dealerFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
+		vinFilter.getElement().setAttribute("style", "width: 170px;");		
 		crudGrid.getCrudLayout().addFilterComponent(dealerFilter);
 
 		carModelFilter = new TextField("Filter by Car Model");
 		carModelFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
+		vinFilter.getElement().setAttribute("style", "width: 170px;");		
 		crudGrid.getCrudLayout().addFilterComponent(carModelFilter);
-		
-		archivedFilter = new Checkbox();
-		archivedFilter.getElement().setProperty("title", "Show archived cars");
-		archivedFilter.setLabel("Arch");
-		archivedFilter.setClassName("archCheckFilterCars");
-		archivedFilter.setValue(false);
-		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
-
 	}
 
 	public void editSelectedCar(ClickEvent<Button> buttonEvent) {
@@ -239,7 +314,7 @@ public class CarListView extends BaseView implements RouterLayout {
 
 	public List<Car> getFilterdCars() {
 		return carService
-				.getCars()
+				.getCarsWithoutArchive()
 				.stream()
 				.filter(car -> {
 
@@ -253,7 +328,7 @@ public class CarListView extends BaseView implements RouterLayout {
 									dealerFilter.getValue())
 							&& StringUtils.containsIgnoreCase(car.getCarModel()
 									.toString(), carModelFilter.getValue())
-							&& (archivedFilter.getValue() || !"ARCHIVED".equals(car.getState()));
+							;
 
 				}).collect(Collectors.toList());
 	}
