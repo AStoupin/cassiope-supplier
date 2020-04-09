@@ -254,13 +254,15 @@ public class PayloadService {
 	public int archivePayloads(Set<Payload> payloads, LocalDate archiveDate, int days) {
 		int count = 0;
 		for(Payload payload : payloads) {
-			long daysBetween = ChronoUnit.DAYS.between(
-					payload.getDate(), 
-					DateUtils.asLocalDateTime(archiveDate));
-			if(payload.getArchivedDate() == null && daysBetween >= days) {
-				payload.setArchivedDate(archiveDate);
-				payloadRepository.save(payload);
-				count++;
+			if(payload.getArchivedDate() == null) {
+				long daysBetween = ChronoUnit.DAYS.between(
+						payload.getDate(), 
+						DateUtils.asLocalDateTime(archiveDate));
+				if(daysBetween >= days) {
+					payload.setArchivedDate(archiveDate);
+					payloadRepository.save(payload);
+					count++;
+				}
 			}
 		}
 		return count;

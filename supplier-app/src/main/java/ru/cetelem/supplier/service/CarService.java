@@ -1,6 +1,7 @@
 package ru.cetelem.supplier.service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,9 @@ import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
 import ru.cetelem.cassiope.supplier.model.Dealer;
 import ru.cetelem.cassiope.supplier.model.FinancePlan;
+import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.RepaymentItem;
+import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.repository.CarRepository;
 
 @Service
@@ -44,6 +47,17 @@ public class CarService {
 		this.dictionaryService = dictionaryService;
 		this.carRepository = carRepository;
 		this.dealerService = dealerService;
+
+	}
+
+	public List<Car> getCarsWithoutArchive() {
+		log.info("CarService getCarsWithoutArchive started");
+		
+		Iterable<Car> iterable =  carRepository.findAllWithoutArchive();
+		List<Car> models = StreamSupport.stream(iterable.spliterator(), false) .collect(Collectors.toList()); 
+
+		log.info("CarService getCarsWithoutArchive finished");
+		return models;
 
 	}
 
@@ -196,6 +210,26 @@ public class CarService {
 		return count;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	public int archiveCars(Set<Car> cars, LocalDate archiveDate, int days) {
+		int count = 0;
+		for(Car car : cars) {
+			if(car.getArchivedDate() == null 
+					&& car.getFullRepaymentDate() != null
+					&& "REPAID".equals(car.getState())
+			) {
+				long daysBetween = ChronoUnit.DAYS.between(
+						car.getFullRepaymentDate(), 
+						DateUtils.asLocalDateTime(archiveDate));
+				if(daysBetween >= days) {
+					car.setArchivedDate(archiveDate);
+					saveCar(car);
+					count++;
+				}
+			}
+		}
+		return count;
+	}
 
 	public Environment getEnvironment() {
 		return environment;

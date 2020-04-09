@@ -17,4 +17,7 @@ public interface CarRepository extends PagingAndSortingRepository<Car, Integer> 
 	
 	@Query("select c from Car c where c.state = :state")
 	public List<Car> findByState(@Param("state") String state);
+
+	@Query("select c from Car c where c.archivedDate is null")
+	public List<Car> findAllWithoutArchive();
 }
