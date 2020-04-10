@@ -1,7 +1,5 @@
 package ru.cetelem.cassiope.supplier.io.f920;
 
-import java.util.Date;
-
 public class F920Trail implements F920Entry {
 	/*
     05  PAY-F-CODE     	Trailer record identifier	Alphabet(02)	"YY"

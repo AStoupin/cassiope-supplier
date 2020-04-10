@@ -7,21 +7,18 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl11Item;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl22Item;
-import ru.cetelem.cassiope.supplier.io.f150.F150;
-import ru.cetelem.cassiope.supplier.io.f150.F150Item;
 import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
+import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.service.CarService;
 import ru.cetelem.supplier.service.PayloadService;
 import ru.cetelem.supplier.util.Configurator;
-import ru.cetelem.cassiope.supplier.util.DateUtils;
 
 
 public class OutCflPayloadItemProcessor implements AbstractPayloadItemProcessor , AbstractCarPayloadItemUpdateProcessor {

@@ -21,6 +21,7 @@ public class DealerService {
 
 	public DealerRepository dealerRepository;
 
+	@SuppressWarnings("unused")
 	private List<Dealer> dealers;
 	
 	@Autowired 

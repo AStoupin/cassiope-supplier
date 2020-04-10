@@ -43,6 +43,8 @@ import ru.cetelem.supplier.ui.component.XFGridCrud;
 @Route(value = "payloads", layout = MainLayout.class)
 
 public class PayloadListView extends BaseView implements RouterLayout {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(PayloadListView.class); 
 	
 	private PayloadService payloadService;

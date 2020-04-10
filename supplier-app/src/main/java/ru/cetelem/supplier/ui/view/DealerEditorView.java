@@ -34,6 +34,7 @@ import ru.cetelem.supplier.ui.component.PayloadItemListBrief;
 
 @PageTitle("Dealer editor")
 @Route(value = "dealer", layout = MainLayout.class)
+@SuppressWarnings("unused")
 public class DealerEditorView extends BaseView implements RouterLayout, HasUrlParameter<String> {
 	private static final Log log = LogFactory.getLog(DealerEditorView.class); 
 

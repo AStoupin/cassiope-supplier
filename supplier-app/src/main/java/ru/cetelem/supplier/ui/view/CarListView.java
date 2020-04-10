@@ -23,7 +23,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
@@ -45,7 +44,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
 import ru.cetelem.cassiope.supplier.model.Car;
-import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.service.CarService;
 import ru.cetelem.supplier.service.DictionaryService;
@@ -56,6 +54,8 @@ import ru.cetelem.supplier.util.ExportXls;
 @PageTitle("Car list")
 @Route(value = "", layout = MainLayout.class)
 public class CarListView extends BaseView implements RouterLayout {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(CarListView.class);
 
 	private CarService carService;

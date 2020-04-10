@@ -6,10 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ru.cetelem.cassiope.supplier.io.PayloadType;
-import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.Payload;
-import ru.cetelem.cassiope.supplier.model.PayloadItem;
-import ru.cetelem.supplier.repository.CarRepository;
 import ru.cetelem.supplier.repository.PayloadRepository;
 
 public class PayloadStateProcessor {

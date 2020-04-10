@@ -2,8 +2,6 @@ package ru.cetelem.cassiope.supplier.io.f120;
 
 import java.util.Date;
 
-import ru.cetelem.cassiope.supplier.io.cfl.Cfl;
-
 public class F120Trail implements F120Entry {
 	/*
 	EntryType	Define type of the entry	Alphabetic	2	ZZ

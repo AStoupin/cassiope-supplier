@@ -1,26 +1,34 @@
 package ru.cetelem.supplier.integration;
 
+import java.time.LocalDate;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.cetelem.cassiope.supplier.model.*;
-import ru.cetelem.supplier.repository.*;
 
-import java.time.LocalDate;
-
-import static ru.cetelem.cassiope.supplier.io.PayloadType.*;
-import static ru.cetelem.cassiope.supplier.io.PayloadType.F920;
+import ru.cetelem.cassiope.supplier.model.Car;
+import ru.cetelem.cassiope.supplier.model.CarModel;
+import ru.cetelem.cassiope.supplier.model.Dealer;
+import ru.cetelem.cassiope.supplier.model.FinancePlan;
+import ru.cetelem.supplier.repository.CarModelRepository;
+import ru.cetelem.supplier.repository.CarRepository;
+import ru.cetelem.supplier.repository.DealerLimitRepository;
+import ru.cetelem.supplier.repository.DealerRepository;
+import ru.cetelem.supplier.repository.FinancePlanRepository;
+import ru.cetelem.supplier.repository.PayloadItemRepository;
+import ru.cetelem.supplier.repository.PayloadRepository;
 
 @Component
+@SuppressWarnings("unused")
 public class DBInitializer implements InitializingBean {
 
     private static final Logger log = LogManager.getLogger(DBInitializer.class);
 
     private final CarModelRepository carModelRepository;
     private final FinancePlanRepository financePlanRepository;
-    private final DealerLimitRepository dealerLimitRepository;
+	private final DealerLimitRepository dealerLimitRepository;
     private final DealerRepository dealerRepository;
     private final CarRepository carRepository;
     private final PayloadRepository payloadRepository;

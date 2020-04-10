@@ -21,6 +21,7 @@ import static java.lang.String.*;
 public  class FileInProcessor implements Processor{
 		private static final Log log = LogFactory.getLog(FileInProcessor.class);
 
+		@SuppressWarnings("unused")
 		private DictionaryService dictionaryService;
 		private PayloadService payloadService;
 	

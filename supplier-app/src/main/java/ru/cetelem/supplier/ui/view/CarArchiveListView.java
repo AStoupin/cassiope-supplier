@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -40,17 +42,21 @@ import ru.cetelem.supplier.ui.component.XFGridCrud;
 @PageTitle("Archive")
 @Route(value = "archive", layout = MainLayout.class)
 public class CarArchiveListView extends BaseView implements RouterLayout {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(CarListView.class);
 
 	private CarService carService;
-	GridCrud<Car> crudGrid;
+	private GridCrud<Car> crudGrid;
 
-	TextField vinFilter;
-	TextField stateFilter;
-	TextField dealerFilter;
-	Checkbox archivedFilter;
-	DatePicker dateFrom;
-	DatePicker dateTo;	
+	private TextField vinFilter;
+	private TextField stateFilter;
+	private TextField dealerFilter;
+	
+	private DatePicker dateFrom;
+	private DatePicker dateTo;	
+	private Checkbox archivedFilter;
+	private Checkbox multiSelect;
 
 	private Button btnArchive;
 
@@ -63,22 +69,33 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		Grid<Car> grid = crudGrid.getGrid();
 
 		crudGrid.setAddOperationVisible(false);
-		crudGrid.setUpdateOperationVisible(false);
+		crudGrid.getUpdateButton().addClickListener(this::editSelectedCar);
 		crudGrid.setDeleteOperationVisible(false);
 		crudGrid.setFindAllOperation(this::getFilterdCars);
-		
+				
 		grid.addItemClickListener(event -> {
-			if(grid.getSelectedItems().contains(event.getItem())) {
-				grid.deselect(event.getItem());
+			if(multiSelect.getValue()) {
+				if(grid.getSelectedItems().contains(event.getItem())) {
+					grid.deselect(event.getItem());
+				} else {
+					grid.select(event.getItem());
+				}
 			} else {
+				//
+			}
+		});
+		
+		grid.addItemDoubleClickListener(event -> {
+			if(!multiSelect.getValue()) {
 				grid.select(event.getItem());
+				editSelectedCar(null);
 			}
 		});
 
 		btnArchive = createArchiveButton();
 		btnArchive.setIcon(new Icon(VaadinIcon.ARCHIVE));
 		btnArchive.setId("btnArchive");
-		btnArchive.getElement().setAttribute("title", "Archive checked cars");
+		btnArchive.getElement().setAttribute("title", "Archive selected car(s)");
 
 		HorizontalLayout horizontalLayout = (HorizontalLayout) crudGrid
 				.getAddButton().getParent().get();
@@ -88,7 +105,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		horizontalLayout.add(btnArchive);
 
 		grid.setMultiSort(true);
-		grid.setSelectionMode(SelectionMode.MULTI);
 
 		crudGrid.getGrid().setColumns("vin", "state");
 
@@ -136,7 +152,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		return new Button("", clickEvent -> {
 			log.info("clickArchiveButton started");
 			Grid<Car> grid = crudGrid.getGrid();
-			
 			int count = 0;
 			Set<Car> cars = new HashSet<>(grid.getSelectedItems());
 			LocalDate today = LocalDate.now();
@@ -170,14 +185,7 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		dealerFilter.setWidth("165px");
 		dealerFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(dealerFilter);
-
-		archivedFilter = new Checkbox();
-		archivedFilter.getElement().setProperty("title", "Show archived cars");
-		archivedFilter.setLabel("Arch");
-		archivedFilter.setClassName("archCheckFilter");
-		archivedFilter.setValue(false);
-		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-
+		
 		dateFrom = new DatePicker("From repayment");
 		dateFrom.setWidth("155px");
 		dateFrom.addValueChangeListener(e -> crudGrid.refreshGrid());
@@ -187,9 +195,37 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		dateTo.setWidth("155px");
 		dateTo.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(dateTo);
-		
-		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
 
+		archivedFilter = new Checkbox();
+		archivedFilter.getElement().setProperty("title", "Show archived cars");
+		archivedFilter.setLabel("Arch");
+		archivedFilter.setClassName("archCheckFilter");
+		archivedFilter.setValue(false);
+		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
+		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
+		
+		multiSelect = new Checkbox();
+		multiSelect.getElement().setProperty("title", "Multi select grid");
+		multiSelect.setLabel("Multi");
+		multiSelect.setClassName("archCheckFilter");
+		multiSelect.setValue(false);
+		multiSelect.addValueChangeListener(e -> {
+			if(e.getValue()) {
+				grid.setSelectionMode(SelectionMode.MULTI);
+			} else {
+				grid.setSelectionMode(SelectionMode.SINGLE);
+			}
+		});
+		crudGrid.getCrudLayout().addFilterComponent(multiSelect);
+
+	}
+
+	public void editSelectedCar(ClickEvent<Button> buttonEvent) {
+		Optional<Car> selectedCar = crudGrid.getGrid().getSelectedItems()
+				.stream().findFirst();
+		if (selectedCar.isPresent())
+			getUI().ifPresent(
+					ui -> ui.navigate("car/" + selectedCar.get().getVin()));
 	}
 
 	public List<Car> getFilterdCars() {

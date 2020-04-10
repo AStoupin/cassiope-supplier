@@ -93,7 +93,8 @@ public class ExportXls {
         xlsExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
         xlsExporter.setExporterOutput(fileOut);
         SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
-        SimpleXlsExporterConfiguration xlsExporterConfiguration = new SimpleXlsExporterConfiguration();
+        @SuppressWarnings("unused")
+		SimpleXlsExporterConfiguration xlsExporterConfiguration = new SimpleXlsExporterConfiguration();
         xlsReportConfiguration.setOnePagePerSheet(true);
         xlsReportConfiguration.setRemoveEmptySpaceBetweenRows(false);
         xlsReportConfiguration.setDetectCellType(true);

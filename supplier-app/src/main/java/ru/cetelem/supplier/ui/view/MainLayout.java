@@ -5,18 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
-
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -25,7 +18,6 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 import ru.cetelem.supplier.util.Configurator;
 
@@ -35,6 +27,8 @@ import ru.cetelem.supplier.util.Configurator;
 @HtmlImport("frontend://styles/app-layout-custom.html")
 @HtmlImport("frontend://styles/shared-styles.html")
 public class MainLayout extends AppLayout   {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(MainLayout.class); 
 
 	private Environment environment = null;

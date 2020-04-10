@@ -4,7 +4,9 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 public class XFGridCrud<T> extends GridCrud<T>{
 
-	public XFGridCrud(Class domainType) {
+	private static final long serialVersionUID = 1L;
+
+	public XFGridCrud(Class<T> domainType) {
 		super(domainType);
 
 		//padding spacing

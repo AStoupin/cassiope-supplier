@@ -20,6 +20,7 @@ public class DealerLimitService {
 	
 	public DealerLimitRepository dealerLimitRepository;
 
+	@SuppressWarnings("unused")
 	private List<DealerLimit> dealerLimits;
 	
 	@Autowired 

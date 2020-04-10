@@ -45,6 +45,7 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 	private String vin;
 	private CarService carService;
 	private DictionaryService dictionaryService;
+	@SuppressWarnings("unused")
 	private PayloadService payloadService;
 	private DealerService dealerService;
 	
@@ -90,9 +91,9 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		NumberField valueFinanceField = new NumberField("Value Finance");
 		valueFinanceField.setVisible(false);		
 		DatePicker  issueDateField = new DatePicker("Issue Date");
-		ComboBox<CarModel>  carModelField = new ComboBox("Car Model");
+		ComboBox<CarModel>  carModelField = new ComboBox<CarModel>("Car Model");
 		carModelField.setItems(dictionaryService.getModels());
-		ComboBox<Dealer>  dealerField = new ComboBox("Dealer");
+		ComboBox<Dealer>  dealerField = new ComboBox<Dealer>("Dealer");
 		dealerField.setItems(dealerService.getDealers());
 		TextField invoiceNumField = new TextField("Invoice Num"); 
 		invoiceNumField.setId("invoiceNumField");
@@ -100,7 +101,7 @@ public class CarEditorView extends BaseView implements RouterLayout, HasUrlParam
 		eptsNumberField.setId("eptsNumber");
 		DatePicker  archivedDateField = new DatePicker("Archived Date");
 		
-		ComboBox<FinancePlan>  financePlanField = new ComboBox("Finance Plan");
+		ComboBox<FinancePlan>  financePlanField = new ComboBox<FinancePlan>("Finance Plan");
 		financePlanField.setId("financePlanField");
 		financePlanField.setItems(dictionaryService.getFinancePlanes());
 		
