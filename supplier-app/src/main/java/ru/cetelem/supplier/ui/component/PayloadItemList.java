@@ -1,6 +1,5 @@
 package ru.cetelem.supplier.ui.component;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +26,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 
 public class PayloadItemList extends VerticalLayout  {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(PayloadItemList.class); 
 	
 	private PayloadService payloadService;
+	@SuppressWarnings("unused")
 	private DictionaryService dictionaryService;
 	private XFGridCrud<PayloadItem> crudGrid ;
 	private TextField sourceFilter;
@@ -75,11 +77,9 @@ public class PayloadItemList extends VerticalLayout  {
 		crudGrid.setDeleteOperation(this::removePayloadItem);
 		crudGrid.setDeleteOperationVisible(!isReadOnly && payloadItemProcessor instanceof AbstractCarPayloadItemUpdateProcessor);
 		
-		crudGrid.getGrid().setColumns("source", "errorDescr");
-		crudGrid.getGrid().getColumns().get(0).setResizable(true).setFlexGrow(5);
-		crudGrid.getGrid().getColumns().get(1).setFlexGrow(1);
-		//crudGrid.getGrid().getColumns().get(1).setResizable(true);
-		//crudGrid.getGrid().getColumns().get(1).setWidth("100px");
+		grid.setColumns("source", "errorDescr");
+		grid.getColumns().get(0).setResizable(true).setFlexGrow(5);
+		grid.getColumns().get(1).setFlexGrow(1);
 		
 		initFilter();
 		

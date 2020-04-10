@@ -20,7 +20,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
-import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
 import ru.cetelem.cassiope.supplier.model.Dealer;
 import ru.cetelem.cassiope.supplier.model.FinancePlan;
@@ -32,11 +31,7 @@ import ru.cetelem.supplier.ui.component.XFGridCrud;
 
 @Route(value = "dic", layout = MainLayout.class)
 public class DictionaryEditorView extends BaseView implements RouterLayout,  HasUrlParameter<String>  {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 
 	
 	private DictionaryService dictionaryService;
@@ -51,7 +46,6 @@ public class DictionaryEditorView extends BaseView implements RouterLayout,  Has
 		this.dealerService = dealerService;
 
 	}
-
 
 
 

@@ -42,6 +42,7 @@ public class PayloadService {
 	private static final Log log = LogFactory.getLog(PayloadService.class); 
 	
 	private PayloadRepository payloadRepository;
+	@SuppressWarnings("unused")
 	private PayloadItemRepository payloadItemRepository;
 	private PayloadItemProcessorFactory payloadItemProcessorFactory;
 	

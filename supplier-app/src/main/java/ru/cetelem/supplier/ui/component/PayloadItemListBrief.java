@@ -14,11 +14,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.RouterLink;
 
-import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
 import ru.cetelem.supplier.ui.view.PayloadEditorView;
 
 public class PayloadItemListBrief extends VerticalLayout  {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(PayloadItemListBrief.class); 
 	
 	private Grid<PayloadItem> crudGrid ;

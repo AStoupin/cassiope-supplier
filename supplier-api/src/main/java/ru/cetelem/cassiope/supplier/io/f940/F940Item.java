@@ -1,9 +1,8 @@
 package ru.cetelem.cassiope.supplier.io.f940;
 
-import ru.cetelem.cassiope.supplier.model.Car;
-import ru.cetelem.cassiope.supplier.model.Dealer;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ru.cetelem.cassiope.supplier.model.Dealer;
 
 /**
  * 

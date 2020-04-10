@@ -1,18 +1,16 @@
 package ru.cetelem.supplier;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import org.junit.Test;
+import java.io.FileInputStream;
+import java.io.IOException;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Date;
+import org.junit.Test;
 
 public class ExcelTest {
 

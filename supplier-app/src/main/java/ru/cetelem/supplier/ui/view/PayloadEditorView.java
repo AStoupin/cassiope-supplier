@@ -17,12 +17,6 @@ import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.cetelem.cassiope.supplier.io.PayloadType;
-import ru.cetelem.cassiope.supplier.model.Payload;
-import ru.cetelem.supplier.service.DictionaryService;
-import ru.cetelem.supplier.service.PayloadService;
-import ru.cetelem.supplier.ui.component.PayloadItemList;
-
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
@@ -47,10 +41,18 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.StreamResource;
 
+import ru.cetelem.cassiope.supplier.io.PayloadType;
+import ru.cetelem.cassiope.supplier.model.Payload;
+import ru.cetelem.supplier.service.DictionaryService;
+import ru.cetelem.supplier.service.PayloadService;
+import ru.cetelem.supplier.ui.component.PayloadItemList;
+
 @PageTitle("Payload editor")
 @Route(value = "payload", layout = MainLayout.class)
 public class PayloadEditorView extends BaseView implements RouterLayout,
 		HasUrlParameter<String> {
+	private static final long serialVersionUID = 1L;
+
 	private static final Log log = LogFactory.getLog(PayloadEditorView.class);
 
 	private PayloadService payloadService;
@@ -111,7 +113,7 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 		dateField = new DatePicker("Date");
 		dateField.setId("dateField");
 		dateField.setEnabled(isReadOnly);
-		payloadTypeField = new ComboBox("Payload Type");
+		payloadTypeField = new ComboBox<PayloadType>("Payload Type");
 		payloadTypeField.setEnabled(isReadOnly);
 		payloadTypeField.setId("payloadTypeField");
 		payloadTypeField.setItems(PayloadType
@@ -180,6 +182,7 @@ public class PayloadEditorView extends BaseView implements RouterLayout,
 				&& "PROCESSED".equals(payload.getState())) {
 			rollback = new Button("Rollback");
 			rollback.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public void onComponentEvent(ClickEvent<Button> event) {
 					ConfirmDialog dialog = new ConfirmDialog

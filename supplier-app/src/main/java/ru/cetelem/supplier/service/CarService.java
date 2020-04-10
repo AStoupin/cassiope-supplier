@@ -21,7 +21,6 @@ import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.CarModel;
 import ru.cetelem.cassiope.supplier.model.Dealer;
 import ru.cetelem.cassiope.supplier.model.FinancePlan;
-import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.RepaymentItem;
 import ru.cetelem.cassiope.supplier.util.DateUtils;
 import ru.cetelem.supplier.repository.CarRepository;
