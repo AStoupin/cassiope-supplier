@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.cetelem.cassiope.supplier.io.PayloadType;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl11Item;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl22Item;
+import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
 import ru.cetelem.cassiope.supplier.util.DateUtils;
@@ -79,6 +80,18 @@ public class PayloadService {
 		return payloads;
 	}
 	
+	
+	public List<Payload> getCarsWithoutArchive() {
+		log.info("CarService getCarsWithoutArchive started");
+		
+		List<Payload> payloads =  payloadRepository.findAllWithoutArchive();
+		
+		//List<Car> models = StreamSupport.stream(iterable.spliterator(), false) .collect(Collectors.toList()); 
+
+		log.info("CarService getCarsWithoutArchive finished");
+		return payloads;
+
+	}	
 	public Optional<Payload> getPayloadByName(String name) {
 		log.info("getPayloadByName started"); 
 		return payloadRepository.findByName(name);

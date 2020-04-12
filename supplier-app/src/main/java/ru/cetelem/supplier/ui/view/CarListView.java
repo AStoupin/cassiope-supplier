@@ -170,7 +170,7 @@ public class CarListView extends BaseView implements RouterLayout {
 			dialog.setWidth("400px");
 			dialog.addDialogCloseActionListener(e -> dialog.close());
 
-			Label leftLabel = new Label("Archive fully repaid cars older then ");			
+			Label leftLabel = new Label("Archive fully repaid cars older than ");			
 			input = new Input();
 			input.setValue("10");
 			input.setWidth("40px");

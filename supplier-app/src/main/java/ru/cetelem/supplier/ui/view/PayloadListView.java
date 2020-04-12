@@ -54,7 +54,6 @@ public class PayloadListView extends BaseView implements RouterLayout {
 	private TextField codeFilter;
 	private TextField nameFilter;
 	private DatePicker dateFilter;
-	private Checkbox archivedFilter;
 
 	private Button btnArchive;
 	private Input input;
@@ -123,7 +122,7 @@ public class PayloadListView extends BaseView implements RouterLayout {
 			dialog.setWidth("400px");
 			dialog.addDialogCloseActionListener(e -> dialog.close());
 
-			Label leftLabel = new Label("Archive payloads older then ");			
+			Label leftLabel = new Label("Archive payloads older than ");			
 			input = new Input();
 			input.setValue("30");
 			input.setWidth("40px");
@@ -200,13 +199,6 @@ public class PayloadListView extends BaseView implements RouterLayout {
 		dateFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(dateFilter);
 
-		archivedFilter = new Checkbox();
-		archivedFilter.getElement().setProperty("title", "Show archived payloads");
-		archivedFilter.setLabel("Arch");
-		archivedFilter.setClassName("archCheckFilter");
-		archivedFilter.setValue(false);
-		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
 
 	}
 	
@@ -223,7 +215,7 @@ public class PayloadListView extends BaseView implements RouterLayout {
 	
 	public List<Payload> getFilterd(){
 		log.info("getFilterd started");
-		List<Payload> lPayloads = payloadService.getPayloads().stream().filter(payload->{			
+		List<Payload> lPayloads = payloadService.getCarsWithoutArchive().stream().filter(payload->{			
 			boolean isFilterd = 
 				StringUtils.containsIgnoreCase(payload.payloadType.toString(),
 						codeFilter.getValue())
@@ -235,8 +227,6 @@ public class PayloadListView extends BaseView implements RouterLayout {
 						nameFilter.getValue())					
 				&& ( dateFilter.getValue() == null ||
 				dateFilter.getValue().equals(DateUtils.asLocalDate(payload.date)) )
-				&& 
-				(archivedFilter.getValue() || payload.getArchivedDate() == null)
 				;
 			return isFilterd;
 			}).collect(Collectors.toList());

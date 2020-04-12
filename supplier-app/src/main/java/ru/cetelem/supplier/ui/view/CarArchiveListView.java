@@ -23,6 +23,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -50,15 +51,10 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 	private GridCrud<Car> crudGrid;
 
 	private TextField vinFilter;
-	private TextField stateFilter;
 	private TextField dealerFilter;
 	
 	private DatePicker dateFrom;
 	private DatePicker dateTo;	
-	private Checkbox archivedFilter;
-	private Checkbox multiSelect;
-
-	private Button btnArchive;
 
 	public CarArchiveListView(@Autowired CarService carService, @Autowired DictionaryService dictionaryService) {
 		log.info("CarList started");
@@ -73,36 +69,18 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		crudGrid.setDeleteOperationVisible(false);
 		crudGrid.setFindAllOperation(this::getFilterdCars);
 				
-		grid.addItemClickListener(event -> {
-			if(multiSelect.getValue()) {
-				if(grid.getSelectedItems().contains(event.getItem())) {
-					grid.deselect(event.getItem());
-				} else {
-					grid.select(event.getItem());
-				}
-			} else {
-				//
-			}
-		});
 		
 		grid.addItemDoubleClickListener(event -> {
-			if(!multiSelect.getValue()) {
 				grid.select(event.getItem());
 				editSelectedCar(null);
-			}
 		});
 
-		btnArchive = createArchiveButton();
-		btnArchive.setIcon(new Icon(VaadinIcon.ARCHIVE));
-		btnArchive.setId("btnArchive");
-		btnArchive.getElement().setAttribute("title", "Archive selected car(s)");
 
 		HorizontalLayout horizontalLayout = (HorizontalLayout) crudGrid
 				.getAddButton().getParent().get();
 		horizontalLayout.setSpacing(false);
 		horizontalLayout.setMargin(false);
 		horizontalLayout.getElement().setAttribute("style", "margin-left: 0px;");
-		horizontalLayout.add(btnArchive);
 
 		grid.setMultiSort(true);
 
@@ -176,10 +154,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		vinFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(vinFilter);
 
-		stateFilter = new TextField("Filter by State");
-		stateFilter.setWidth("165px");
-		stateFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(stateFilter);
 
 		dealerFilter = new TextField("Filter by Dealer");
 		dealerFilter.setWidth("165px");
@@ -196,27 +170,11 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		dateTo.addValueChangeListener(e -> crudGrid.refreshGrid());
 		crudGrid.getCrudLayout().addFilterComponent(dateTo);
 
-		archivedFilter = new Checkbox();
-		archivedFilter.getElement().setProperty("title", "Show archived cars");
-		archivedFilter.setLabel("Arch");
-		archivedFilter.setClassName("archCheckFilter");
-		archivedFilter.setValue(false);
-		archivedFilter.addValueChangeListener(e -> crudGrid.refreshGrid());
-		crudGrid.getCrudLayout().addFilterComponent(archivedFilter);
+		Label labelInfo  = new Label("List of top 100 found cars in the archive");
+		labelInfo.setClassName("labelInfo");
+		crudGrid.getCrudLayout().addFilterComponent(labelInfo);
+
 		
-		multiSelect = new Checkbox();
-		multiSelect.getElement().setProperty("title", "Multi select grid");
-		multiSelect.setLabel("Multi");
-		multiSelect.setClassName("archCheckFilter");
-		multiSelect.setValue(false);
-		multiSelect.addValueChangeListener(e -> {
-			if(e.getValue()) {
-				grid.setSelectionMode(SelectionMode.MULTI);
-			} else {
-				grid.setSelectionMode(SelectionMode.SINGLE);
-			}
-		});
-		crudGrid.getCrudLayout().addFilterComponent(multiSelect);
 
 	}
 
@@ -229,21 +187,9 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 	}
 
 	public List<Car> getFilterdCars() {
-		return carService.getCars().stream().filter(car -> {
-			
-			return StringUtils.containsIgnoreCase(car.getVin(), vinFilter.getValue())
-					&& (StringUtils.containsIgnoreCase(car.getState(), "NEW")
-							|| StringUtils.containsIgnoreCase(car.getState(), "REPAID")
-							|| StringUtils.containsIgnoreCase(car.getState(), "ARCHIVED")
-							)
-					&& isBetweenDates(car.getFullRepaymentDate(), 
-							dateFrom.getValue(), dateTo.getValue())
-					&& StringUtils.containsIgnoreCase(car.getState(), stateFilter.getValue())
-					&& StringUtils.containsIgnoreCase(car.getDealer() == null 
-						? "" : car.getDealer().toString(),dealerFilter.getValue())
-					&& (archivedFilter.getValue() || !"ARCHIVED".equals(car.getState()));
+		
+		return carService.findInArchive(vinFilter.getValue(), dateFrom.getValue(), dateTo.getValue(), dealerFilter.getValue());
 
-		}).collect(Collectors.toList());
 	}
 
 	private boolean isBetweenDates(LocalDate date, LocalDate dateFrom, LocalDate dateTo) {

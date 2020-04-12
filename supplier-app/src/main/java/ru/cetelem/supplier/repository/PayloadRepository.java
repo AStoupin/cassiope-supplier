@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import ru.cetelem.cassiope.supplier.io.PayloadType;
+import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.Payload;
 
 @Repository
@@ -29,6 +30,10 @@ public interface PayloadRepository  extends CrudRepository<Payload, Integer> {
 
 	@Query("select p from Payload p where p.state = :state ")
 	public List<Payload> getPayloadByStatus(@Param("state") String status);
+	
+	@Query("select c from Payload c where c.archivedDate is null")
+	public List<Payload> findAllWithoutArchive();
+	
 
 	@Query("select max(p.sequenceNumber) from Payload p where p.payloadType = :payloadType ")
 	public int getPayloadMaxSequence(@Param("payloadType")  PayloadType payloadType);
