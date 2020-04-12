@@ -1,16 +1,11 @@
 package ru.cetelem.supplier.ui.view;
 
 import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +13,10 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.QuerySortOrder;
@@ -126,25 +116,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 
 	}
 
-	private Button createArchiveButton() {
-		return new Button("", clickEvent -> {
-			log.info("clickArchiveButton started");
-			Grid<Car> grid = crudGrid.getGrid();
-			int count = 0;
-			Set<Car> cars = new HashSet<>(grid.getSelectedItems());
-			LocalDate today = LocalDate.now();
-			count = carService.archiveCars(cars, today);		
-			
-			crudGrid.refreshGrid();
-			if(count == 0) {
-				Notification.show("There are no cars for archiving");
-			} else {
-				Notification.show("Archived " + count + " car(s)");
-			}
-			return;
-		});
-	}
-
 
 	private void initFilter(Grid<Car> grid) {
 
@@ -190,28 +161,6 @@ public class CarArchiveListView extends BaseView implements RouterLayout {
 		
 		return carService.findInArchive(vinFilter.getValue(), dateFrom.getValue(), dateTo.getValue(), dealerFilter.getValue());
 
-	}
-
-	private boolean isBetweenDates(LocalDate date, LocalDate dateFrom, LocalDate dateTo) {
-		
-		int compareFrom = 0;
-		int compareTo = 0;
-		if(date == null) {
-			if(dateFrom != null) {
-				compareFrom = 1;
-			}
-			if(dateTo != null) {
-				compareTo = -1;
-			}
-		} else {
-			if(dateFrom != null) {
-				compareFrom = dateFrom.compareTo(date);
-			}
-			if(dateTo != null) {
-				compareTo = dateTo.compareTo(date);
-			}
-		}
-		return compareFrom <= 0 && compareTo >= 0;
 	}
 
 }
