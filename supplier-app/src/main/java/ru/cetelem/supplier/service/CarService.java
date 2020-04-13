@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,20 @@ public class CarService {
 
 	}
 
+	public List<Car> findInArchive(String vin, LocalDate dateFrom, 
+			LocalDate dateTo, String dealer ){
+
+		log.info("CarService findInArchive started");
+		
+		List<Car> models =  carRepository.findInArchive(vin, dateFrom, dateTo, dealer);
+
+
+		log.info("CarService findInArchive finished");
+		return models;
+		
+	}
+
+		
 	public List<Car> getCars() {
 		log.info("CarService getCars started");
 		
