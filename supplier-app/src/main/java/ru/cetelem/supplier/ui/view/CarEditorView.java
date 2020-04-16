@@ -6,17 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.cetelem.cassiope.supplier.model.Car;
-import ru.cetelem.cassiope.supplier.model.CarModel;
-import ru.cetelem.cassiope.supplier.model.Dealer;
-import ru.cetelem.cassiope.supplier.model.FinancePlan;
-import ru.cetelem.supplier.service.CarService;
-import ru.cetelem.supplier.service.DealerService;
-import ru.cetelem.supplier.service.DictionaryService;
-import ru.cetelem.supplier.service.PayloadService;
-import ru.cetelem.supplier.ui.component.PayloadItemListBrief;
-import ru.cetelem.supplier.ui.component.RepaymentItemList;
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -34,6 +23,17 @@ import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
+
+import ru.cetelem.cassiope.supplier.model.Car;
+import ru.cetelem.cassiope.supplier.model.CarModel;
+import ru.cetelem.cassiope.supplier.model.Dealer;
+import ru.cetelem.cassiope.supplier.model.FinancePlan;
+import ru.cetelem.supplier.service.CarService;
+import ru.cetelem.supplier.service.DealerService;
+import ru.cetelem.supplier.service.DictionaryService;
+import ru.cetelem.supplier.service.PayloadService;
+import ru.cetelem.supplier.ui.component.PayloadItemListBrief;
+import ru.cetelem.supplier.ui.component.RepaymentItemList;
 
 @PageTitle("Car editor")
 @Route(value = "car", layout = MainLayout.class)

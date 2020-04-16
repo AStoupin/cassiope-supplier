@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.cetelem.cassiope.supplier.io.PayloadType;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl11Item;
 import ru.cetelem.cassiope.supplier.io.cfl.Cfl22Item;
-import ru.cetelem.cassiope.supplier.model.Car;
 import ru.cetelem.cassiope.supplier.model.Payload;
 import ru.cetelem.cassiope.supplier.model.PayloadItem;
 import ru.cetelem.cassiope.supplier.util.DateUtils;

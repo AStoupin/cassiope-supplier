@@ -39,6 +39,7 @@ public class Car {
 	@ManyToOne(targetEntity = CarModel.class, optional = false, fetch = FetchType.EAGER)
 	private CarModel carModel;
 	@ManyToOne(targetEntity = Dealer.class, optional = true, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SELECT)
 	private Dealer dealer;
 
 	@ManyToOne(targetEntity = FinancePlan.class, optional = true, fetch = FetchType.EAGER)
