@@ -22,7 +22,7 @@
 
 		<camel.version>2.25.0</camel.version>
 		<!-- Dependencies -->
-		<vaadin.version>14.1.25</vaadin.version>
+		<vaadin.version>19.0.5</vaadin.version>
 	</properties>
 
 	<pluginRepositories>
